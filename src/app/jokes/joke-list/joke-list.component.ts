@@ -9,16 +9,20 @@ import IJoke from '../../types/IJoke';
 @Component({
   selector: 'app-joke-list',
   template: `
-    <table class="container mx-auto text-center">
-      <tr>
-        <th>setup</th>
-        <th>punchline</th>
-      </tr>
-      <tr *ngFor="let joke of jokes | async">
-        <td>{{ joke.setup }}</td>
-        <td>{{ joke.punchline }}</td>
-      </tr>
-    </table>
+    <section class="overflow-x-auto container mx-auto">
+      <table class="table w-full">
+        <thead>
+          <th>setup</th>
+          <th>punchline</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let joke of jokes | async">
+            <td>{{ joke.setup }}</td>
+            <td>{{ joke.punchline }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   `,
   styles: [],
 })
