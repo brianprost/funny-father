@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
+    projectId: 'dad-jokes-ae5c0',
+    appId: '1:941214316766:web:3f0ed8dec342d423a1aa4f',
+    databaseURL: 'https://dad-jokes-ae5c0-default-rtdb.firebaseio.com',
+    storageBucket: 'dad-jokes-ae5c0.appspot.com',
     apiKey: 'AIzaSyC7LHKWTLA-THwNRNpPArv-fFcpZ1ueC78',
     authDomain: 'dad-jokes-ae5c0.firebaseapp.com',
-    databaseURL: 'https://dad-jokes-ae5c0-default-rtdb.firebaseio.com',
-    projectId: 'dad-jokes-ae5c0',
-    storageBucket: 'dad-jokes-ae5c0.appspot.com',
     messagingSenderId: '941214316766',
-    appId: '1:941214316766:web:3f0ed8dec342d423a1aa4f',
     measurementId: 'G-CNJ2HNHQ9Y',
   },
 };

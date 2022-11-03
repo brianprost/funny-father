@@ -99,6 +99,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ng-dad-jokes:build:production",
+            "firebaseProject": "dad-jokes-ae5c0",
+            "firebaseHostingSite": "dad-jokes-ae5c0"
+          }
         }
       }
     }
