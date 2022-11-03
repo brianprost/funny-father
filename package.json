@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "daisyui": "^2.38.0",
     "firebase": "^9.13.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
