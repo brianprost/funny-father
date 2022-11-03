@@ -1,32 +1,56 @@
 import { Component } from '@angular/core';
+import {
+  AngularFireDatabase,
+  AngularFireList,
+} from '@angular/fire/compat/database';
+import { map, Observable } from 'rxjs';
+import IJoke from './types/IJoke';
 
 @Component({
   selector: 'app-root',
   template: `
-    <!--The content below is only a placeholder and can be replaced.-->
-    <div style="text-align:center" class="content">
-      <h1>
-        Welcome to {{title}}!
-      </h1>
-      <span style="display: block">{{ title }} app is running!</span>
-      <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-    </div>
-    <h2>Here are some links to help you start: </h2>
-    <ul>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-      </li>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-      </li>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-      </li>
-    </ul>
+    <!-- {{ items }} -->
+    <h1>motherrrrrr fucker</h1>
+    <!-- display all jokes -->
+    <table>
+      <tr>
+        <th>setup</th>
+        <th>punchline</th>
+      </tr>
+      <tr *ngFor="let joke of jokes | async">
+
+        <td>{{ joke.setup }}</td>
+        <td>{{ joke.punchline }}</td>
+      </tr>
+    </table>
+
     <router-outlet></router-outlet>
   `,
-  styles: []
+  styles: [],
 })
 export class AppComponent {
   title = 'ng-dad-jokes';
+
+  jokesRef: AngularFireList<any>;
+  jokes: Observable<IJoke[]>;
+
+  constructor(db: AngularFireDatabase) {
+    this.jokesRef = db.list('jokes');
+    this.jokes = this.jokesRef
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      );
+  }
+  addJoke(newJoke: string) {
+    this.jokesRef.push({ text: newJoke });
+  }
+  updateJoke(key: string, newText: string) {
+    this.jokesRef.update(key, { text: newText });
+  }
+  deleteItem(key: string) {
+    this.jokesRef.remove(key);
+  }
 }
