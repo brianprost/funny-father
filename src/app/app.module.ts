@@ -14,9 +14,12 @@ import {
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { JokesComponent } from './jokes/jokes.component';
+import { JokeListComponent } from './jokes/joke-list/joke-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, JokesComponent, JokeListComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
