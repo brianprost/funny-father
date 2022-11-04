@@ -23,6 +23,7 @@ module.exports = {
       fontFamily: {
         cursive: ["Poor Story", "cursive"],
         sans: ["Hammersmith One", "sans-serif"],
+        title: ["Major Mono Display", "monospace"],
       },
     },
   },

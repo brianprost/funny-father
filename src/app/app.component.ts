@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Observable } from 'rxjs';
-import IJoke from './types/IJoke';
 
 @Component({
   selector: 'app-root',
   template: `
-    <div class="bg-primary h-screen">
+    <div class="bg-primary h-screen font-sans">
       <app-navbar></app-navbar>
-      <div class="font-sans">
-        <router-outlet></router-outlet>
-      </div>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
     </div>
   `,
   styles: [],
