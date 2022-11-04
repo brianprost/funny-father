@@ -13,7 +13,7 @@ import IJoke from '../types/IJoke';
           <p class="py-6 text-3xl">
             {{ (joke | async)?.punchline }}
           </p>
-          <button class="btn btn-primary" (click)="getNewJoke()">
+          <button class="btn btn-secondary" (click)="getNewJoke()">
             Get another joke
           </button>
         </div>
