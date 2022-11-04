@@ -6,7 +6,7 @@ import IJoke from '../types/IJoke';
 @Component({
   selector: 'app-home',
   template: `
-    <section id="home" class="hero min-h-[calc(100vh-133px)] bg-primary">
+    <section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
           <h1 class="text-5xl xs:text-7xl font-bold">

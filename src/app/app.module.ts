@@ -19,6 +19,8 @@ import { JokeListComponent } from './jokes/joke-list/joke-list.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MadeByBrianComponent } from './footer/made-by-brian/made-by-brian.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     JokeListComponent,
     HomeComponent,
     NavbarComponent,
+    MadeByBrianComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
