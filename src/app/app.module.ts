@@ -18,6 +18,7 @@ import { JokesComponent } from './jokes/jokes.component';
 import { JokeListComponent } from './jokes/joke-list/joke-list.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
+    FontAwesomeModule,
   ],
   providers: [
     ScreenTrackingService,

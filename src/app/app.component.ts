@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Observable } from 'rxjs';
-import IJoke from './types/IJoke';
 
 @Component({
   selector: 'app-root',
