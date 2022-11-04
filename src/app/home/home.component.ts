@@ -9,11 +9,11 @@ import IJoke from '../types/IJoke';
     <section id="home" class="hero min-h-screen bg-base-200">
       <div class="hero-content text-center">
         <div class="max-w-md">
-          <h1 class="text-5xl font-bold">{{ (joke | async)?.setup }}</h1>
-          <p class="py-6 text-3xl">
+          <h1 class="text-7xl font-bold">{{ (joke | async)?.setup }}</h1>
+          <p class="py-6 text-5xl">
             {{ (joke | async)?.punchline }}
           </p>
-          <button class="btn btn-secondary" (click)="getNewJoke()">
+          <button class="btn btn-primary" (click)="getNewJoke()">
             Get another joke
           </button>
         </div>
