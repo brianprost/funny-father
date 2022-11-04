@@ -17,9 +17,10 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { JokesComponent } from './jokes/jokes.component';
 import { JokeListComponent } from './jokes/joke-list/joke-list.component';
 import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, JokesComponent, JokeListComponent, HomeComponent],
+  declarations: [AppComponent, JokesComponent, JokeListComponent, HomeComponent, NavbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
