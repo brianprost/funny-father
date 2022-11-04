@@ -20,7 +20,13 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, JokesComponent, JokeListComponent, HomeComponent, NavbarComponent],
+  declarations: [
+    AppComponent,
+    JokesComponent,
+    JokeListComponent,
+    HomeComponent,
+    NavbarComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

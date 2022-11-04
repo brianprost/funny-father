@@ -6,12 +6,13 @@ import IJoke from './types/IJoke';
 @Component({
   selector: 'app-root',
   template: `
-  <div class="bg-primary h-screen">
-    <app-navbar></app-navbar>
+    <div class="bg-primary h-screen">
+      <app-navbar></app-navbar>
       <div class="font-sans">
         <router-outlet></router-outlet>
       </div>
-  </div> `,
+    </div>
+  `,
   styles: [],
 })
 export class AppComponent {
