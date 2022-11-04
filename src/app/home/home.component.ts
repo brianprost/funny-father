@@ -31,11 +31,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // get joke from firebase
-    console.log(`innit`);
-
-    this.joke = this.db
-      .object(`jokes/${this.getRandomNumber()}`)
-      .valueChanges() as Observable<IJoke>;
+    this.getFirebaseJoke();
   }
 
   // get random number between 0 and max count of jokes
@@ -49,7 +45,12 @@ export class HomeComponent implements OnInit {
   }
 
   getNewJoke() {
-    // TODO this is bad because it just refreshes the page
-    window.location.reload();
+    this.getFirebaseJoke();
+  }
+
+  getFirebaseJoke() {
+    this.joke = this.db
+      .object(`jokes/${this.getRandomNumber()}`)
+      .valueChanges() as Observable<IJoke>;
   }
 }
