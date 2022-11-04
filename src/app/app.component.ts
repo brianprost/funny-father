@@ -6,7 +6,7 @@ import IJoke from './types/IJoke';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="font-cursive">
+    <div class="font-sans">
       <router-outlet></router-outlet>
     </div> `,
   styles: [],

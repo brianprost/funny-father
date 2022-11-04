@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         cursive: ["Poor Story", "cursive"],
+        sans: ["Hammersmith One", "sans-serif"],
       },
     },
   },
