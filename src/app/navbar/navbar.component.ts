@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
     <div class="navbar bg-primary">
       <div class="navbar-start"></div>
       <div class="navbar-center">
-        <img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20" />
+        <a href="/"
+          ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
+        /></a>
       </div>
       <div class="navbar-end"></div>
     </div>
