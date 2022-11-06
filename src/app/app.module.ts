@@ -21,6 +21,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MadeByBrianComponent } from './footer/made-by-brian/made-by-brian.component';
 import { FooterComponent } from './footer/footer.component';
+import { LoginComponent } from './account/login/login.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FooterComponent } from './footer/footer.component';
     NavbarComponent,
     MadeByBrianComponent,
     FooterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
