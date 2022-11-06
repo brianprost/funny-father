@@ -9,12 +9,10 @@ import IJoke from '../types/IJoke';
     <section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
-          <h1 class="text-5xl xs:text-7xl font-bold">
-            {{ (joke | async)?.setup }}
-          </h1>
-          <p class="py-6 text-4xl xs:text-5xl">
-            {{ (joke | async)?.punchline }}
-          </p>
+          <app-setup [setup]="(joke | async)?.setup"></app-setup>
+          <app-punchline
+            [punchline]="(joke | async)?.punchline"
+          ></app-punchline>
           <button class="btn btn-neutral" (click)="getNewJoke()">
             Get another joke
           </button>
