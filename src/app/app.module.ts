@@ -23,6 +23,7 @@ import { MadeByBrianComponent } from './footer/made-by-brian/made-by-brian.compo
 import { FooterComponent } from './footer/footer.component';
 import { SetupComponent } from './jokes/setup/setup.component';
 import { PunchlineComponent } from './jokes/punchline/punchline.component';
+import { JokeComponent } from './jokes/joke/joke.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PunchlineComponent } from './jokes/punchline/punchline.component';
     FooterComponent,
     SetupComponent,
     PunchlineComponent,
+    JokeComponent,
   ],
   imports: [
     BrowserModule,

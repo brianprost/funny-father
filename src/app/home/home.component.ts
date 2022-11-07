@@ -9,10 +9,7 @@ import IJoke from '../types/IJoke';
     <section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
-          <app-setup [setup]="(joke | async)?.setup"></app-setup>
-          <app-punchline
-            [punchline]="(joke | async)?.punchline"
-          ></app-punchline>
+          <app-joke [joke]="joke" *ngIf="joke"></app-joke>
           <button class="btn btn-neutral" (click)="getNewJoke()">
             Get another joke
           </button>
