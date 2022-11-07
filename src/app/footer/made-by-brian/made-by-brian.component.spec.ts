@@ -8,9 +8,8 @@ describe('MadeByBrianComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MadeByBrianComponent ]
-    })
-    .compileComponents();
+      declarations: [MadeByBrianComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MadeByBrianComponent);
     component = fixture.componentInstance;
