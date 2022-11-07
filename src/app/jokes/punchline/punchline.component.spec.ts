@@ -8,9 +8,8 @@ describe('PunchlineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PunchlineComponent ]
-    })
-    .compileComponents();
+      declarations: [PunchlineComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PunchlineComponent);
     component = fixture.componentInstance;
