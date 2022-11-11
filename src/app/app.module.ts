@@ -24,6 +24,9 @@ import { FooterComponent } from './footer/footer.component';
 import { SetupComponent } from './jokes/setup/setup.component';
 import { PunchlineComponent } from './jokes/punchline/punchline.component';
 import { JokeComponent } from './jokes/joke/joke.component';
+import { AccountComponent } from './account/account.component';
+import { AccountInfoComponent } from './account/account-info/account-info.component';
+import { AvatarComponent } from './account/account-info/avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { JokeComponent } from './jokes/joke/joke.component';
     SetupComponent,
     PunchlineComponent,
     JokeComponent,
+    AccountComponent,
+    AccountInfoComponent,
+    AvatarComponent,
   ],
   imports: [
     BrowserModule,
