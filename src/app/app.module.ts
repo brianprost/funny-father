@@ -27,6 +27,8 @@ import { JokeComponent } from './jokes/joke/joke.component';
 import { AccountComponent } from './account/account.component';
 import { AccountInfoComponent } from './account/account-info/account-info.component';
 import { AvatarComponent } from './account/account-info/avatar/avatar.component';
+import { LoginComponent } from './account/login/login.component';
+import { SignupComponent } from './account/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { AvatarComponent } from './account/account-info/avatar/avatar.component'
     AccountComponent,
     AccountInfoComponent,
     AvatarComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-navbar',
   template: `
-    <div class="navbar bg-primary">
+    <!-- <div class="navbar bg-primary">
       <div class="navbar-start"></div>
       <div class="navbar-center">
         <a href="/"
@@ -12,8 +12,8 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
         /></a>
       </div>
       <div class="navbar-end"></div>
-    </div>
-    <!-- <div class="navbar bg-primary">
+    </div> -->
+    <div class="navbar bg-primary">
       <div class="flex-1">
         <a href="/"
           ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
@@ -35,7 +35,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
           </li>
         </ul>
       </div>
-    </div> -->
+    </div>
   `,
   styles: [],
 })
