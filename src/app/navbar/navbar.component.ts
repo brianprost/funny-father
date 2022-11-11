@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
   template: `
-    <!-- <div class="navbar bg-primary">
-      <div class="navbar-start"></div>
-      <div class="navbar-center">
-        <a href="/"
-          ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
-        /></a>
-      </div>
-      <div class="navbar-end"></div>
-    </div> -->
     <div class="navbar bg-primary">
+      <ng-container *ngIf="!showAdvancedMenu; else advancedMenu">
+        <div class="navbar-start"></div>
+        <div class="navbar-center">
+          <a href="/"
+            ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
+          /></a>
+        </div>
+        <div class="navbar-end"></div>
+      </ng-container>
+    </div>
+
+    <ng-template #advancedMenu>
       <div class="flex-1">
         <a href="/"
           ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
@@ -35,11 +38,13 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
           </li>
         </ul>
       </div>
-    </div>
+    </ng-template>
   `,
   styles: [],
 })
 export class NavbarComponent implements OnInit {
+  @Input() showAdvancedMenu: boolean = false;
+
   // icons
   faChevronDown = faChevronDown;
 
