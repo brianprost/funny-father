@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import IJoke from '../types/IJoke';
+import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
+import { DynamoService } from '../services/dynamo.service';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +10,7 @@ import IJoke from '../types/IJoke';
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
           <app-joke [joke]="joke" *ngIf="joke"></app-joke>
+          <br />
           <button class="btn btn-neutral" (click)="getNewJoke()">
             Get another joke
           </button>
@@ -19,18 +22,23 @@ import IJoke from '../types/IJoke';
 })
 export class HomeComponent implements OnInit {
   joke: IJoke = {
-    setup: 'welcome to',
-    punchline: 'Funny Father',
+    id: NaN,
+    setup: '',
+    punchline: '',
   };
 
-  constructor() {}
+  constructor(private ddb: DynamoService) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    await this.getNewJoke();
+  }
 
-  getNewJoke() {
-    this.joke = {
-      setup: 'this is a setup',
-      punchline: 'this is a punchline',
-    };
+  async getNewJoke() {
+    let newJoke = await this.ddb.getRandomJoke();
+    this.joke = newJoke;
+  }
+
+  async getJokeCount() {
+    let count = await this.ddb.getJokeCount();
   }
 }
