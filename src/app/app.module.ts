@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,14 +12,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MadeByBrianComponent } from './footer/made-by-brian/made-by-brian.component';
 import { FooterComponent } from './footer/footer.component';
-import { SetupComponent } from './jokes/setup/setup.component';
-import { PunchlineComponent } from './jokes/punchline/punchline.component';
+import { SetupComponent } from './jokes/joke/setup/setup.component';
+import { PunchlineComponent } from './jokes/joke/punchline/punchline.component';
 import { JokeComponent } from './jokes/joke/joke.component';
 import { AccountComponent } from './account/account.component';
 import { AccountInfoComponent } from './account/account-info/account-info.component';
 import { AvatarComponent } from './account/account-info/avatar/avatar.component';
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
+import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +39,9 @@ import { SignupComponent } from './account/signup/signup.component';
     AvatarComponent,
     LoginComponent,
     SignupComponent,
+    AddNewJokeComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule],
+  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
