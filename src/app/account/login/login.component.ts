@@ -1,5 +1,4 @@
 import { Component, OnInit, Optional } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -32,25 +31,11 @@ import { Router } from '@angular/router';
   styles: [],
 })
 export class LoginComponent implements OnInit {
-  dummyData() {
-    return {
-      email: 'bprost94@gmail.com',
-      password: 'rockon94',
-    };
-  }
 
-  constructor(@Optional() private auth: Auth, private router: Router) {}
-
+  constructor() {}
   ngOnInit(): void {}
 
-  async login() {
-    const { email, password } = this.dummyData();
-    try {
-      const user = await signInWithEmailAndPassword(this.auth, email, password);
-      this.router.navigate(['/jokes']);
-      console.log(user);
-    } catch (error) {
-      console.log(error);
-    }
+  login() {
+    console.log('login');
   }
 }
