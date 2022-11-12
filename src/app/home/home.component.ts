@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Observable } from 'rxjs';
 import IJoke from '../types/IJoke';
 
 @Component({
@@ -20,32 +18,19 @@ import IJoke from '../types/IJoke';
   styles: [],
 })
 export class HomeComponent implements OnInit {
-  joke: Observable<IJoke> | undefined;
+  joke: IJoke = {
+    setup: 'welcome to',
+    punchline: 'Funny Father',
+  };
 
-  constructor(private db: AngularFireDatabase) {}
+  constructor() {}
 
-  ngOnInit() {
-    // get joke from firebase
-    this.getFirebaseJoke();
-  }
-
-  // get random number between 0 and max count of jokes
-  getRandomNumber(): number {
-    return Math.floor(Math.random() * 24);
-  }
-
-  getLengthOfJokeList() {
-    // get length of joke list from firebase
-    // return length
-  }
+  ngOnInit() {}
 
   getNewJoke() {
-    this.getFirebaseJoke();
-  }
-
-  getFirebaseJoke() {
-    this.joke = this.db
-      .object(`jokes/${this.getRandomNumber()}`)
-      .valueChanges() as Observable<IJoke>;
+    this.joke = {
+      setup: 'this is a setup',
+      punchline: 'this is a punchline',
+    };
   }
 }

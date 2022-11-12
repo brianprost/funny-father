@@ -3,17 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import {
-  provideAnalytics,
-  getAnalytics,
-  ScreenTrackingService,
-  UserTrackingService,
-} from '@angular/fire/analytics';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { JokesComponent } from './jokes/jokes.component';
 import { JokeListComponent } from './jokes/joke-list/joke-list.component';
 import { HomeComponent } from './home/home.component';
@@ -48,20 +38,8 @@ import { SignupComponent } from './account/signup/signup.component';
     LoginComponent,
     SignupComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
-    FontAwesomeModule,
-  ],
-  providers: [
-    ScreenTrackingService,
-    UserTrackingService,
-    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-  ],
+  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

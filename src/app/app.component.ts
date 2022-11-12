@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <div class="bg-primary h-screen font-sans">
-      <app-navbar [showAdvancedMenu]="false"></app-navbar>
+      <app-navbar [showAdvancedMenu]="true"></app-navbar>
       <router-outlet></router-outlet>
       <app-footer></app-footer>
     </div>
