@@ -7,7 +7,7 @@ import IJoke from 'src/app/types/IJoke';
 @Component({
   selector: 'app-add-new-joke',
   template: `
-    <div class="flex flex-col justify-center items-center h-[50vh]">
+    <div class="flex flex-col justify-center items-center h-[80vh]">
       <div class="card w-96 bg-base-100 shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Add new joke</h2>
@@ -16,17 +16,17 @@ import IJoke from 'src/app/types/IJoke';
               type="text"
               id="setup"
               placeholder="Setup"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full my-2"
               formControlName="setup"
             />
             <input
               type="text"
               id="punchline"
               placeholder="Punchline"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full my-2"
               formControlName="punchline"
             />
-            <div class="card-actions justify-end">
+            <div class="card-actions justify-end mt-4">
               <button type="submit" class="btn btn-primary">Add joke</button>
             </div>
           </form>
