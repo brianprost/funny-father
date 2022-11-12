@@ -57,7 +57,6 @@ export class AddNewJokeComponent implements OnInit {
       window.navigator.userAgent.includes(device)
     );
   }
-
   newJokeFormGroup = new FormGroup({
     setup: new FormControl('', { nonNullable: true }),
     punchline: new FormControl('', { nonNullable: true }),

@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'jokes/add',
     component: AddNewJokeComponent,
   },
+  {
+    path: 'jokes/add',
+    component: AddNewJokeComponent,
+  },
 ];
 
 @NgModule({
