@@ -21,6 +21,7 @@ import { AvatarComponent } from './account/account-info/avatar/avatar.component'
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,12 @@ import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component
     SignupComponent,
     AddNewJokeComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, ReactiveFormsModule],
+  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, ReactiveFormsModule, ServiceWorkerModule.register('ngsw-worker.js', {
+  enabled: environment.production,
+  // Register the ServiceWorker as soon as the application is stable
+  // or after 30 seconds (whichever comes first).
+  registrationStrategy: 'registerWhenStable:30000'
+})],
   providers: [],
   bootstrap: [AppComponent],
 })
