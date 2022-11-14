@@ -1,8 +1,6 @@
 export const environment = {
   production: true,
-  // i know putting these here is bad, but it's only temporary
-  // will remove after settling on hosting
-  AWS_ACCESS_KEY_ID: 'AKIAZ2GNH2ABJQNFFJ66',
-  AWS_SECRET_ACCESS_KEY: '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',
-  AWS_REGION: 'us-east-1',
+  AWS_ACCESS_KEY_ID: process.env['BEZOAWS_ACCESS_KEY_ID'],
+  AWS_SECRET_ACCESS_KEY: process.env['BEZOAWS_SECRET_ACCESS_KEY'],
+  AWS_REGION: process.env['BEZOAWS_REGION'],
 };
