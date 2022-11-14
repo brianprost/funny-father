@@ -1,16 +1,12 @@
-import { Component, OnInit, Optional } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signup',
   template: `
     <div class="container mx-auto flex justify-center">
       <div class="card w-96 bg-base-100 shadow-xl">
-        <figure class="px-10 pt-10">
-          <app-avatar></app-avatar>
-        </figure>
         <div class="card-body items-center text-center">
-          <h2 class="card-title">Login</h2>
+          <h2 class="card-title">Sign up</h2>
           <input
             type="email"
             placeholder="email"
@@ -21,21 +17,26 @@ import { Router } from '@angular/router';
             placeholder="password"
             class="input input-bordered w-full max-w-xs"
           />
+          <input
+            type="date"
+            placeholder="birthdate"
+            class="input input-bordered w-full max-w-xs"
+          />
           <div class="card-actions">
-            <button class="btn btn-primary" (click)="login()">Login</button>
+            <button class="btn btn-primary">Sign up</button>
           </div>
+          <!-- TODO: make this a tab -->
+          <p class="text-base-content text-opacity-50 mt-4">
+            Have we met before? <a href="/account/login" class="link">Login</a>
+          </p>
         </div>
       </div>
     </div>
   `,
   styles: [],
 })
-export class LoginComponent implements OnInit {
-
+export class SignupComponent implements OnInit {
   constructor() {}
-  ngOnInit(): void {}
 
-  login() {
-    console.log('login');
-  }
+  ngOnInit(): void {}
 }

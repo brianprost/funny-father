@@ -18,9 +18,10 @@ import { JokeComponent } from './jokes/joke/joke.component';
 import { AccountComponent } from './account/account.component';
 import { AccountInfoComponent } from './account/account-info/account-info.component';
 import { AvatarComponent } from './account/account-info/avatar/avatar.component';
-import { LoginComponent } from './account/login/login.component';
-import { SignupComponent } from './account/signup/signup.component';
+import { LoginComponent } from './account/auth/login/login.component';
+import { SignupComponent } from './account/auth/signup/signup.component';
 import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component';
+import { AuthComponent } from './account/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,14 @@ import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component
     LoginComponent,
     SignupComponent,
     AddNewJokeComponent,
+    AuthComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
