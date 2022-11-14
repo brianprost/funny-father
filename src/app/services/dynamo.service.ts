@@ -13,10 +13,10 @@ import IJoke from '../types/IJoke';
 })
 export class DynamoService {
   client = new DynamoDBClient({
-    region: environment.AWS_REGION,
+    region: environment.AWS_REGION as string,
     credentials: {
-      accessKeyId: environment.AWS_ACCESS_KEY_ID,
-      secretAccessKey: environment.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: environment.AWS_ACCESS_KEY_ID as string,
+      secretAccessKey: environment.AWS_SECRET_ACCESS_KEY as string,
     },
   });
 

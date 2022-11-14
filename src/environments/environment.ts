@@ -1,12 +1,13 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import { awsConfig } from './aws';
 
 export const environment = {
   production: false,
-  AWS_ACCESS_KEY_ID: 'AKIAZ2GNH2ABJQNFFJ66',
-  AWS_SECRET_ACCESS_KEY: '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',
-  AWS_REGION: 'us-east-1',
+  AWS_ACCESS_KEY_ID: awsConfig.accessKeyId,
+  AWS_SECRET_ACCESS_KEY: awsConfig.secretAccessKey,
+  AWS_REGION: awsConfig.region,
 };
 
 /*
