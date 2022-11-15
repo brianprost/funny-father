@@ -41,7 +41,7 @@ import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component
     SignupComponent,
     AddNewJokeComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, ReactiveFormsModule],
+  imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }), AppRoutingModule, FontAwesomeModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
