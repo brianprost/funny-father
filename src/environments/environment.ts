@@ -4,9 +4,8 @@
 
 export const environment = {
   production: false,
-  AWS_ACCESS_KEY_ID: 'AKIAZ2GNH2ABJQNFFJ66',
-  AWS_SECRET_ACCESS_KEY: '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',
-  AWS_REGION: 'us-east-1',
+  RANDOM_JOKE_LAMBDA_ENDPOINT:
+    'https://u9h7fay121.execute-api.us-east-1.amazonaws.com/default/get_random_dad_joke',
 };
 
 /*
