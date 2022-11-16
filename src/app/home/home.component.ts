@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import IJoke from '../types/IJoke';
 import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 import { DynamoService } from '../services/dynamo.service';
+import { StaticJokeService } from '../services/services/temp/static-joke.service';
 
 @Component({
   selector: 'app-home',
@@ -27,14 +28,15 @@ export class HomeComponent implements OnInit {
     punchline: '',
   };
 
-  constructor(private ddb: DynamoService) {}
+  constructor(private ddb: DynamoService, private sj: StaticJokeService) {}
 
   async ngOnInit() {
     await this.getNewJoke();
   }
 
   async getNewJoke() {
-    let newJoke = await this.ddb.getRandomJoke();
+    // let newJoke = await this.ddb.getRandomJoke();
+    let newJoke = await this.sj.getRandomJoke();
     this.joke = newJoke;
   }
 
