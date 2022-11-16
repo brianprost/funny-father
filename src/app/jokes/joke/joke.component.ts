@@ -10,7 +10,7 @@ import IJoke from 'src/app/types/IJoke';
   styles: [],
 })
 export class JokeComponent implements OnInit {
-  @Input() joke: IJoke | undefined;
+  @Input() joke: IJoke | undefined = undefined;
 
   constructor() {}
 

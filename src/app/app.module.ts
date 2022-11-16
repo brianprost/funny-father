@@ -21,6 +21,7 @@ import { AvatarComponent } from './account/account-info/avatar/avatar.component'
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component
     SignupComponent,
     AddNewJokeComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, ReactiveFormsModule],
+  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, ReactiveFormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

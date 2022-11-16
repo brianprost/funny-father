@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+import IJoke from 'src/app/types/IJoke';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StaticJokeService {
+  constructor(private http: HttpClient) {}
 
-  api_url = 'https://u9h7fay121.execute-api.us-east-1.amazonaws.com/default/get_random_dad_joke'
-
-  constructor() { }
-
-  // fetches a random joke from the api_url. no parameters needed
-  getRandomJoke() {
-    return fetch(this.api_url)
-      .then(response => response.json())
-      .then(data => data.joke)
+  // fetches a random joke from the api_url and returns it as an observable
+  getRandomJoke(): Observable<IJoke> {
+    return this.http.get<IJoke>(environment.RANDOM_JOKE_LAMBDA_ENDPOINT);
   }
 }

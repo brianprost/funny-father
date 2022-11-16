@@ -3,6 +3,7 @@ import IJoke from '../types/IJoke';
 import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 import { DynamoService } from '../services/dynamo.service';
 import { StaticJokeService } from '../services/services/temp/static-joke.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,9 @@ import { StaticJokeService } from '../services/services/temp/static-joke.service
     <section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
-          <app-joke [joke]="joke" *ngIf="joke"></app-joke>
+          <ng-container *ngIf="joke$ | async as joke">
+            <app-joke [joke]="joke"></app-joke>
+          </ng-container>
           <br />
           <button class="btn btn-neutral" (click)="getNewJoke()">
             Get another joke
@@ -22,11 +25,7 @@ import { StaticJokeService } from '../services/services/temp/static-joke.service
   styles: [],
 })
 export class HomeComponent implements OnInit {
-  joke: IJoke = {
-    id: NaN,
-    setup: '',
-    punchline: '',
-  };
+  joke$!: Observable<IJoke>;
 
   constructor(private ddb: DynamoService, private sj: StaticJokeService) {}
 
@@ -35,12 +34,10 @@ export class HomeComponent implements OnInit {
   }
 
   async getNewJoke() {
-    // let newJoke = await this.ddb.getRandomJoke();
-    let newJoke = await this.sj.getRandomJoke();
-    this.joke = newJoke;
+    this.joke$ = this.sj.getRandomJoke();
   }
 
-  async getJokeCount() {
-    let count = await this.ddb.getJokeCount();
-  }
+  // async getJokeCount() {
+  //   let count = await this.ddb.getJokeCount();
+  // }
 }
