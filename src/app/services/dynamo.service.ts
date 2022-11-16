@@ -12,78 +12,78 @@ import IJoke from '../types/IJoke';
   providedIn: 'root',
 })
 export class DynamoService {
-  client = new DynamoDBClient({
-    region: environment.AWS_REGION,
-    credentials: {
-      accessKeyId: environment.AWS_ACCESS_KEY_ID,
-      secretAccessKey: environment.AWS_SECRET_ACCESS_KEY,
-    },
-  });
+  // client = new DynamoDBClient({
+  //   region: environment.AWS_REGION,
+  //   credentials: {
+  //     accessKeyId: environment.AWS_ACCESS_KEY_ID,
+  //     secretAccessKey: environment.AWS_SECRET_ACCESS_KEY,
+  //   },
+  // });
 
   constructor() {}
 
-  async getJokeCount(): Promise<number> {
-    const command = new GetItemCommand({
-      TableName: 'JokeStats',
-      Key: {
-        id: { S: 'jokeCount' },
-      },
-    });
-    // return just the number of jokes
-    return await this.client
-      .send(command)
-      .then((data: any) => data.Item.jokeCount.N);
-  }
+  // async getJokeCount(): Promise<number> {
+  //   const command = new GetItemCommand({
+  //     TableName: 'JokeStats',
+  //     Key: {
+  //       id: { S: 'jokeCount' },
+  //     },
+  //   });
+  //   // return just the number of jokes
+  //   return await this.client
+  //     .send(command)
+  //     .then((data: any) => data.Item.jokeCount.N);
+  // }
 
-  async getRandomJoke(): Promise<IJoke> {
-    const jokeCount: number = await this.getJokeCount();
-    const command = new GetItemCommand({
-      TableName: 'Jokes',
-      Key: {
-        JokeId: {
-          N: String(Math.floor(Math.random() * jokeCount)),
-        },
-      },
-    });
-    return this.client.send(command).then((data: any) => {
-      return {
-        id: data.Item.JokeId.N,
-        setup: data.Item.Setup.S,
-        punchline: data.Item.Punchline.S,
-      };
-    });
-  }
+  // async getRandomJoke(): Promise<IJoke> {
+  //   const jokeCount: number = await this.getJokeCount();
+  //   const command = new GetItemCommand({
+  //     TableName: 'Jokes',
+  //     Key: {
+  //       JokeId: {
+  //         N: String(Math.floor(Math.random() * jokeCount)),
+  //       },
+  //     },
+  //   });
+  //   return this.client.send(command).then((data: any) => {
+  //     return {
+  //       id: data.Item.JokeId.N,
+  //       setup: data.Item.Setup.S,
+  //       punchline: data.Item.Punchline.S,
+  //     };
+  //   });
+  // }
 
-  async addNewJoke(newJoke: IJoke): Promise<void> {
-    const jokeCount: number = await this.getJokeCount();
+  // async addNewJoke(newJoke: IJoke): Promise<void> {
+  //   const jokeCount: number = await this.getJokeCount();
 
-    const command = new PutItemCommand({
-      TableName: 'Jokes',
-      Item: {
-        JokeId: {
-          N: String(jokeCount),
-        },
-        Setup: {
-          S: newJoke.setup,
-        },
-        Punchline: {
-          S: newJoke.punchline,
-        },
-      },
-    });
-    await this.client.send(command);
-    const updateCommand = new UpdateItemCommand({
-      TableName: 'JokeStats',
-      Key: {
-        id: { S: 'jokeCount' },
-      },
-      UpdateExpression: 'set jokeCount = :jokeCount',
-      ExpressionAttributeValues: {
-        // yes, it's stupid that we have to wrap a number in a number in a string
-        // but that's how DynamoDB works
-        ':jokeCount': { N: String(Number(jokeCount) + 1) },
-      },
-    });
-    await this.client.send(updateCommand);
-  }
+  //   const command = new PutItemCommand({
+  //     TableName: 'Jokes',
+  //     Item: {
+  //       JokeId: {
+  //         N: String(jokeCount),
+  //       },
+  //       Setup: {
+  //         S: newJoke.setup,
+  //       },
+  //       Punchline: {
+  //         S: newJoke.punchline,
+  //       },
+  //     },
+  //   });
+  //   await this.client.send(command);
+  //   const updateCommand = new UpdateItemCommand({
+  //     TableName: 'JokeStats',
+  //     Key: {
+  //       id: { S: 'jokeCount' },
+  //     },
+  //     UpdateExpression: 'set jokeCount = :jokeCount',
+  //     ExpressionAttributeValues: {
+  //       // yes, it's stupid that we have to wrap a number in a number in a string
+  //       // but that's how DynamoDB works
+  //       ':jokeCount': { N: String(Number(jokeCount) + 1) },
+  //     },
+  //   });
+  //   await this.client.send(updateCommand);
+  // }
 }

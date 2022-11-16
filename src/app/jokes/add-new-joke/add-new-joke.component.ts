@@ -67,7 +67,7 @@ export class AddNewJokeComponent implements OnInit {
   ngOnInit(): void {}
 
   async addNewJoke(newJoke: IJoke) {
-    await this.ddb.addNewJoke(newJoke);
+    // await this.ddb.addNewJoke(newJoke);
   }
 
   // handle button click
