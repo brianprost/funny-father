@@ -12,8 +12,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MadeByBrianComponent } from './footer/made-by-brian/made-by-brian.component';
 import { FooterComponent } from './footer/footer.component';
-import { SetupComponent } from './jokes/joke/setup/setup.component';
-import { PunchlineComponent } from './jokes/joke/punchline/punchline.component';
 import { JokeComponent } from './jokes/joke/joke.component';
 import { AccountComponent } from './account/account.component';
 import { AccountInfoComponent } from './account/account-info/account-info.component';
@@ -32,8 +30,6 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     MadeByBrianComponent,
     FooterComponent,
-    SetupComponent,
-    PunchlineComponent,
     JokeComponent,
     AccountComponent,
     AccountInfoComponent,

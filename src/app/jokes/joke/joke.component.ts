@@ -4,8 +4,12 @@ import IJoke from 'src/app/types/IJoke';
 @Component({
   selector: 'app-joke',
   template: `
-    <app-setup [setup]="joke?.setup"></app-setup>
-    <app-punchline [punchline]="joke?.punchline"></app-punchline>
+    <h1 class="text-5xl xs:text-7xl font-bold">
+      {{ joke?.setup }}
+    </h1>
+    <p class="py-6 text-4xl xs:text-5xl">
+      {{ joke?.punchline }}
+    </p>
   `,
   styles: [],
 })
