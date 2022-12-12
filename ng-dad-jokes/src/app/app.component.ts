@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
       <div>
         <router-outlet></router-outlet>
       </div>
-      <div class="">
+      <div>
         <app-footer></app-footer>
       </div>
     </div>
