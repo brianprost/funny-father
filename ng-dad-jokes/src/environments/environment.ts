@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   RANDOM_JOKE_LAMBDA_ENDPOINT:
     'https://u9h7fay121.execute-api.us-east-1.amazonaws.com/default/get_random_dad_joke',
+  NODEJS_JOKE_ENDPOINT: 'https://izwfmviie3.execute-api.us-east-1.amazonaws.com/default/getRandomDadJoke',
 };
 
 /*
