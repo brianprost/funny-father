@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import IJoke from '../types/IJoke';
-import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
-import { DynamoService } from '../services/dynamo.service';
-import { StaticJokeService } from '../services/services/temp/static-joke.service';
 import { Observable } from 'rxjs';
 import { JokeService } from '../services/joke.service';
 
@@ -28,18 +25,13 @@ import { JokeService } from '../services/joke.service';
 export class HomeComponent implements OnInit {
   joke$!: Observable<IJoke>;
 
-  constructor(private ddb: DynamoService, private sj: StaticJokeService, private jokeService: JokeService) {}
+  constructor(private jokeService: JokeService) {}
 
   async ngOnInit() {
     await this.getNewJoke();
   }
 
   async getNewJoke() {
-    // this.joke$ = this.sj.getRandomJoke();
     this.joke$ = this.jokeService.getRandomJoke();
   }
-
-  // async getJokeCount() {
-  //   let count = await this.ddb.getJokeCount();
-  // }
 }
