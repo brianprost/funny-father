@@ -53,6 +53,7 @@ Desktop.ini
 
 # Angular
 node_modules/
+.angular/
 
 # Visual Studio 2017
 *.csproj.user
