@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import IJoke from '../types/IJoke';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { JokeService } from '../services/joke.service';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home',
@@ -22,16 +23,20 @@ import { JokeService } from '../services/joke.service';
   `,
   styles: [],
 })
-export class HomeComponent implements OnInit {
-  joke$!: Observable<IJoke>;
+export class HomeComponent {
+  joke$!: Observable<any>;
 
-  constructor(private jokeService: JokeService) {}
-
-  async ngOnInit() {
-    await this.getNewJoke();
+  constructor(firestore: Firestore) {
+    const jokeCollection: any = collection(firestore, 'jokes');
+    // get the joke from the 5th document in the collection
+    console.log("collection:", jokeCollection);
+    const allJokes: any = collectionData(jokeCollection);
+    console.log("allJokes:", allJokes);
+    
+    
+    // log all jokes
   }
 
-  async getNewJoke() {
-    this.joke$ = this.jokeService.getRandomJoke();
+  getNewJoke() {
   }
 }
