@@ -82,3 +82,11 @@ tsconfig.tsbuildinfo
 
 # Webpack
 dist/
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
+
+# mac
+.DS_Store

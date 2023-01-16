@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DynamoService } from 'src/app/services/dynamo.service';
 import IJoke from 'src/app/types/IJoke';
 
 @Component({
@@ -62,7 +61,7 @@ export class AddNewJokeComponent implements OnInit {
     punchline: new FormControl('', { nonNullable: true }),
   });
 
-  constructor(private ddb: DynamoService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -77,6 +76,7 @@ export class AddNewJokeComponent implements OnInit {
     const newJoke: IJoke = {
       setup: this.newJokeFormGroup.get('setup')?.value as string,
       punchline: this.newJokeFormGroup.get('punchline')?.value as string,
+      author: "anonymous because we haven't implemented auth yet",
     };
     // 2. add the joke
     await this.addNewJoke(newJoke);

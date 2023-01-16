@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import IJoke from '../types/IJoke';
-import { Observable } from 'rxjs';
-import { JokeService } from '../services/joke.service';
+import { Observable, map } from 'rxjs';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home',
@@ -22,16 +22,25 @@ import { JokeService } from '../services/joke.service';
   `,
   styles: [],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   joke$!: Observable<IJoke>;
+  jokesFromFirestore$!: any;
 
-  constructor(private jokeService: JokeService) {}
-
-  async ngOnInit() {
-    await this.getNewJoke();
+  constructor(private readonly firestore: Firestore) {
+    this.getNewJoke();
   }
 
-  async getNewJoke() {
-    this.joke$ = this.jokeService.getRandomJoke();
+  getNewJoke() {
+    const jokesCollection = collection(this.firestore, 'jokes');
+    const jokes$ = collectionData(jokesCollection, { idField: 'id' });
+    // get length of jokes
+    const jokesLength$ = jokes$.pipe(map((jokes) => jokes.length));
+    // set joke$ to a random joke
+    this.joke$ = jokes$.pipe(
+      map((jokes) => {
+        const randomIndex = Math.floor(Math.random() * jokes.length);
+        return jokes[randomIndex];
+      })
+    ) as Observable<IJoke>;
   }
 }
