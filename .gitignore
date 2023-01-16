@@ -87,3 +87,6 @@ dist/
 .firebase
 *-debug.log
 .runtimeconfig.json
+
+# mac
+.DS_Store
