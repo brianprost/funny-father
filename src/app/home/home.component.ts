@@ -6,7 +6,7 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 @Component({
   selector: 'app-home',
   template: `
-    <section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
+    <section id="home" class="hero min-h-[calc(100vh-180px)] bg-secondary">
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
           <ng-container *ngIf="joke$ | async as joke">
