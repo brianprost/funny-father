@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import IJoke from '../types/IJoke';
 import { Observable, map } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { JokeService } from '../services/joke.service';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,7 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
     <section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
-          <ng-container *ngIf="joke$ | async as joke">
-            <app-joke [joke]="joke"></app-joke>
-          </ng-container>
+            <app-joke></app-joke>
           <br />
           <button class="btn btn-neutral" (click)="getNewJoke()">
             Get another joke
@@ -26,21 +25,11 @@ export class HomeComponent {
   joke$!: Observable<IJoke>;
   jokesFromFirestore$!: any;
 
-  constructor(private readonly firestore: Firestore) {
+  constructor(private jokeService: JokeService) {
     this.getNewJoke();
   }
 
-  getNewJoke() {
-    const jokesCollection = collection(this.firestore, 'jokes');
-    const jokes$ = collectionData(jokesCollection, { idField: 'id' });
-    // get length of jokes
-    const jokesLength$ = jokes$.pipe(map((jokes) => jokes.length));
-    // set joke$ to a random joke
-    this.joke$ = jokes$.pipe(
-      map((jokes) => {
-        const randomIndex = Math.floor(Math.random() * jokes.length);
-        return jokes[randomIndex];
-      })
-    ) as Observable<IJoke>;
+  getNewJoke(): void {
+    this.jokeService.getRandomJoke();
   }
 }
