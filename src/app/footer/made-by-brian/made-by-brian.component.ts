@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-made-by-brian',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
       class="text-md flex h-16 items-center flex-col lg:flex-row gap-4 lg:gap-0 lg:justify-between bg-skin text-skin mx-4 text-secondary-content mb-6 lg:mb-0"
     >
       <a
-        href="https://brianprost.com/#contact"
+        href="https://brianprost.com/contact"
         target="_blank"
         class="hover:text-secondary-focus hover:underline hover:font-bold"
       >
@@ -28,8 +28,4 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: [],
 })
-export class MadeByBrianComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class MadeByBrianComponent {}
