@@ -1,4 +1,4 @@
-export interface IUser {
+export type FunnyFatherUser = {
   id?: string;
   email: string;
   name: string;

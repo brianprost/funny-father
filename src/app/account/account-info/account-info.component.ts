@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Auth, user } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
-import { IUser } from 'src/app/models/IUser';
+import { FunnyFatherUser } from 'src/app/models/FunnyFatherUser';
 
 @Component({
   selector: 'app-account-info',

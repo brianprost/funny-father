@@ -2,7 +2,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { Auth, User, user } from '@angular/fire/auth';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { IUser } from '../models/IUser';
+import { FunnyFatherUser } from '../models/FunnyFatherUser';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, doc } from '@angular/fire/firestore';
 
@@ -58,15 +58,15 @@ export class NavbarComponent {
   private auth: Auth = inject(Auth);
   user$ = user(this.auth);
   private firestore = inject(Firestore);
-  // userProfile$: BehaviorSubject<IUser>;
+  // userProfile$: BehaviorSubject<FunnyFatherUser>;
 
   constructor() {
     const userProfileCollection = collection(this.firestore, 'users');
 
   }
-  // userProfile: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(new IUser);
+  // userProfile: BehaviorSubject<FunnyFatherUser> = new BehaviorSubject<FunnyFatherUser>(new FunnyFatherUser);
 
-  // getUserProfile(): IUser {
+  // getUserProfile(): FunnyFatherUser {
   //   const user = this.user$;
   //   const userRef = collection(this.firestore, 'users');
   //   const userDoc = userRef.doc(user.uid);
