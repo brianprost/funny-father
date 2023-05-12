@@ -5,7 +5,8 @@ import { Component } from '@angular/core';
   template: `
     <div class="bg-primary h-screen font-sans flex flex-col jusify-between">
       <div>
-        <app-navbar [showAdvancedMenu]="true"></app-navbar>
+        <!-- TODO: firebase remote config -->
+        <app-navbar [showAdvancedMenu]="true"></app-navbar> 
       </div>
       <div>
         <router-outlet></router-outlet>

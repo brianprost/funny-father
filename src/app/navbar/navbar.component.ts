@@ -65,14 +65,4 @@ export class NavbarComponent {
   private firestore = inject(Firestore);
   private userService = inject(UserService);
   userProfile$: Observable<FunnyFatherUser> = this.userService.getUserProfile();
-  // userProfile: BehaviorSubject<FunnyFatherUser> = new BehaviorSubject<FunnyFatherUser>(new FunnyFatherUser);
-
-  // getUserProfile(): FunnyFatherUser {
-  //   const user = this.user$;
-  //   const userRef = collection(this.firestore, 'users');
-  //   const userDoc = userRef.doc(user.uid);
-  //   const userDocData = userDoc.get();
-  //   const userProfile = userDocData.data();
-  //   return userProfile;
-  // }
 }
