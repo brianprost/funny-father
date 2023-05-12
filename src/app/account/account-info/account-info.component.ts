@@ -8,20 +8,20 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'app-account-info',
   template: `
     <div class="flex h-screen justify-center items-center">
-      <div class="card w-96 bg-base-100 shadow-xl">
+      <div class="card w-96 bg-base-100 shadow-xl" *ngIf="userProfile$ | async as userProfile">
         <figure class="px-10 pt-10">
           <app-avatar></app-avatar>
         </figure>
         <div class="card-body items-center text-center">
-          <h2 class="card-title" *ngIf="userProfile$ | async as userProfile">{{ (userProfile.firstName + userProfile.lastName) }}</h2>
+          <h2 class="card-title">{{userProfile.firstName}} {{ userProfile.lastName }}</h2>
           <input
             type="email"
-            placeholder="{{ accountInfo.email }}"
+            placeholder="{{ userProfile.email }}"
             class="input input-bordered w-full max-w-xs"
           />
           <input
             type="tel"
-            placeholder="{{ accountInfo.phone }}"
+            placeholder="{{ userProfile.phone }}"
             class="input input-bordered w-full max-w-xs"
           />
           <input
@@ -39,18 +39,8 @@ import { UserService } from 'src/app/services/user.service';
   styles: [],
 })
 export class AccountInfoComponent {
-  accountInfo = {
-    name: 'Chris R',
-    email: 'chris_r@WhatKindOfMoney.com',
-    phone: '555-555-5555',
-  };
 
   auth = inject(Auth);
   userService = inject(UserService);
   userProfile$: BehaviorSubject<FunnyFatherUser> = this.userService.getUserProfile();
-  // we have to query the user's data from the database (cloud firestore) where the documentId is the user's uid
-  // firstName$: BehaviorSubject<string> = new BehaviorSubject(
-  //   user(this.authService).firstName
-  // );
-
 }

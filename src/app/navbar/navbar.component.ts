@@ -32,19 +32,22 @@ import { UserService } from '../services/user.service';
         <ul class="menu menu-horizontal p-0">
           <li><a href="/">Home</a></li>
           <li><a href="/jokes">Jokes</a></li>
-          <li *ngIf="this.userProfile$ | async as userProfile"><a href="/account">{{userProfile.firstName}} {{ userProfile.lastName }}</a></li>
-          <!-- <li *ngIf="
-            this.user$ | async as user">
-            {{ user.uid }}
-          </li> -->
-          <li tabindex="0">
-            <a href="/account">
-              Account
-              <fa-icon [icon]="faChevronDown"></fa-icon>
-            </a>
+          <li tabindex="0" *ngIf="this.userProfile$ | async as userProfile">
+              <p>{{userProfile.firstName}} {{ userProfile.lastName }}  
+                <fa-icon [icon]="faChevronDown"></fa-icon>
+              </p>
             <ul class="p-2 bg-base-100">
-              <li><a href="/account/signup">Signup</a></li>
-              <li><a href="/account/login">Login</a></li>
+              <ng-container *ngIf="userProfile$ | async as userProfile; then authenticated else unauthenticated" />
+                <ng-template #authenticated>
+                  <li><a href="/account">Account</a></li>
+                  <li><a href="/account/jokes">My Jokes</a></li>
+                  <li><a href="/account/favorites">My Favorites</a></li>
+                  <li><a href="/account/logout">Logout</a></li>
+                </ng-template>
+                <ng-template #unauthenticated>
+                  <li><a href="/account/signup">Signup</a></li>
+                  <li><a href="/account/login">Login</a></li>
+                </ng-template>
             </ul>
           </li>
         </ul>
