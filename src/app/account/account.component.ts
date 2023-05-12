@@ -12,8 +12,6 @@ import { IUser } from '../models/IUser';
   </div>`,
   styles: [],
 })
-export class AccountComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class AccountComponent  {
+  
 }

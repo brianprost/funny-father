@@ -1,5 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { Auth, User, user } from '@angular/fire/auth';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { IUser } from '../models/IUser';
+import { Firestore } from '@angular/fire/firestore';
+import { collection, doc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-navbar',
@@ -26,6 +31,10 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
         <ul class="menu menu-horizontal p-0">
           <li><a href="/">Home</a></li>
           <li><a href="/jokes">Jokes</a></li>
+          <li *ngIf="
+            this.user$ | async as user">
+            {{ user.uid }}
+          </li>
           <li tabindex="0">
             <a href="/account">
               Account
@@ -42,13 +51,27 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
   `,
   styles: [],
 })
-export class NavbarComponent implements OnInit {
-  @Input() showAdvancedMenu: boolean = false;
+export class NavbarComponent {
+  @Input() showAdvancedMenu = true;
 
-  // icons
   faChevronDown = faChevronDown;
+  private auth: Auth = inject(Auth);
+  user$ = user(this.auth);
+  private firestore = inject(Firestore);
+  // userProfile$: BehaviorSubject<IUser>;
 
-  constructor() {}
+  constructor() {
+    const userProfileCollection = collection(this.firestore, 'users');
 
-  ngOnInit(): void {}
+  }
+  // userProfile: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(new IUser);
+
+  // getUserProfile(): IUser {
+  //   const user = this.user$;
+  //   const userRef = collection(this.firestore, 'users');
+  //   const userDoc = userRef.doc(user.uid);
+  //   const userDocData = userDoc.get();
+  //   const userProfile = userDocData.data();
+  //   return userProfile;
+  // }
 }

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Auth, user } from '@angular/fire/auth';
+import { BehaviorSubject } from 'rxjs';
+import { IUser } from 'src/app/models/IUser';
 
 @Component({
   selector: 'app-account-info',
@@ -9,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
           <app-avatar></app-avatar>
         </figure>
         <div class="card-body items-center text-center">
-          <h2 class="card-title">{{ accountInfo.name }}</h2>
+          <h2 class="card-title" *ngIf="user$ | async as user">{{ user.uid }}</h2>
           <input
             type="email"
             placeholder="{{ accountInfo.email }}"
@@ -34,14 +37,18 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: [],
 })
-export class AccountInfoComponent implements OnInit {
+export class AccountInfoComponent {
   accountInfo = {
     name: 'Chris R',
     email: 'chris_r@WhatKindOfMoney.com',
     phone: '555-555-5555',
   };
 
-  constructor() {}
+  auth = inject(Auth);
+  user$ = user(this.auth);
+  // we have to query the user's data from the database (cloud firestore) where the documentId is the user's uid
+  // firstName$: BehaviorSubject<string> = new BehaviorSubject(
+  //   user(this.authService).firstName
+  // );
 
-  ngOnInit(): void {}
 }

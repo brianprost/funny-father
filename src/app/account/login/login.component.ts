@@ -1,5 +1,6 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit, Optional, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -30,12 +31,11 @@ import { Router } from '@angular/router';
   `,
   styles: [],
 })
-export class LoginComponent implements OnInit {
-
-  constructor() {}
-  ngOnInit(): void {}
+export class LoginComponent {
+  private auth: Auth = inject(Auth);
 
   login() {
-    console.log('login');
+    // do login with username and password
+    signInWithEmailAndPassword(this.auth, 'brian.s.prost+alphaOne@gmail.com', 'RBV0qnd5drq@fzr@aec')
   }
 }
