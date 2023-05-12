@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { FunnyFatherUser } from '../models/FunnyFatherUser';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, doc } from '@angular/fire/firestore';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -31,10 +32,11 @@ import { collection, doc } from '@angular/fire/firestore';
         <ul class="menu menu-horizontal p-0">
           <li><a href="/">Home</a></li>
           <li><a href="/jokes">Jokes</a></li>
-          <li *ngIf="
+          <li *ngIf="this.userProfile$ | async as userProfile"><a href="/account">{{userProfile.firstName}} {{ userProfile.lastName }}</a></li>
+          <!-- <li *ngIf="
             this.user$ | async as user">
             {{ user.uid }}
-          </li>
+          </li> -->
           <li tabindex="0">
             <a href="/account">
               Account
@@ -58,12 +60,8 @@ export class NavbarComponent {
   private auth: Auth = inject(Auth);
   user$ = user(this.auth);
   private firestore = inject(Firestore);
-  // userProfile$: BehaviorSubject<FunnyFatherUser>;
-
-  constructor() {
-    const userProfileCollection = collection(this.firestore, 'users');
-
-  }
+  private userService = inject(UserService);
+  userProfile$: Observable<FunnyFatherUser> = this.userService.getUserProfile();
   // userProfile: BehaviorSubject<FunnyFatherUser> = new BehaviorSubject<FunnyFatherUser>(new FunnyFatherUser);
 
   // getUserProfile(): FunnyFatherUser {

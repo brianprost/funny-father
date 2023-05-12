@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Auth, user } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { FunnyFatherUser } from 'src/app/models/FunnyFatherUser';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-account-info',
@@ -12,7 +13,7 @@ import { FunnyFatherUser } from 'src/app/models/FunnyFatherUser';
           <app-avatar></app-avatar>
         </figure>
         <div class="card-body items-center text-center">
-          <h2 class="card-title" *ngIf="user$ | async as user">{{ user.uid }}</h2>
+          <h2 class="card-title" *ngIf="userProfile$ | async as userProfile">{{ (userProfile.firstName + userProfile.lastName) }}</h2>
           <input
             type="email"
             placeholder="{{ accountInfo.email }}"
@@ -45,7 +46,8 @@ export class AccountInfoComponent {
   };
 
   auth = inject(Auth);
-  user$ = user(this.auth);
+  userService = inject(UserService);
+  userProfile$: BehaviorSubject<FunnyFatherUser> = this.userService.getUserProfile();
   // we have to query the user's data from the database (cloud firestore) where the documentId is the user's uid
   // firstName$: BehaviorSubject<string> = new BehaviorSubject(
   //   user(this.authService).firstName

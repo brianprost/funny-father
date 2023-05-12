@@ -36,8 +36,6 @@ export class JokeService {
       map((jokes) => jokes[randomJokeIndex])
     ).subscribe((joke) => {
       this.featuredJoke$.next(joke as IJoke);
-      console.log(this.featuredJoke$.value);
-      
     });
   }
 }
