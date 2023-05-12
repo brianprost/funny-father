@@ -29,14 +29,14 @@ import { UserService } from '../services/user.service';
         /></a>
       </div>
       <div class="flex-none">
-        <ul class="menu menu-horizontal p-0">
+        <ul class="menu menu-horizontal rounded-xl p-0">
           <li><a href="/">Home</a></li>
           <li><a href="/jokes">Jokes</a></li>
           <li tabindex="0" *ngIf="this.userProfile$ | async as userProfile">
               <p>{{userProfile.firstName}} {{ userProfile.lastName }}  
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>
-            <ul class="p-2 bg-base-100">
+            <ul class="p-2 bg-base-100 rounded-l-xl">
               <ng-container *ngIf="userProfile$ | async as userProfile; then authenticated else unauthenticated" />
                 <ng-template #authenticated>
                   <li><a href="/account">Account</a></li>
