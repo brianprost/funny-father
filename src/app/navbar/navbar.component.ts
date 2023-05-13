@@ -6,6 +6,7 @@ import { FunnyFatherUser } from '../models/FunnyFatherUser';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, doc } from '@angular/fire/firestore';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -40,7 +41,7 @@ import { UserService } from '../services/user.service';
               <ng-container *ngIf="userProfile$ | async as userProfile; then authenticated else unauthenticated" />
                 <ng-template #authenticated>
                   <li><a href="/account">Account</a></li>
-                  <li><a href="/account/jokes">My Jokes</a></li>
+                  <!-- <li><a href="/account/jokes">My Jokes</a></li> -->
                   <li><a href="/account/favorites">My Favorites</a></li>
                   <li><a href="/account/logout">Logout</a></li>
                 </ng-template>
@@ -59,10 +60,10 @@ import { UserService } from '../services/user.service';
 export class NavbarComponent {
   @Input() showAdvancedMenu = true;
 
-  faChevronDown = faChevronDown;
-  private auth: Auth = inject(Auth);
-  user$ = user(this.auth);
-  private firestore = inject(Firestore);
+  private authService = inject(AuthService);
   private userService = inject(UserService);
-  userProfile$: Observable<FunnyFatherUser> = this.userService.getUserProfile();
+  userProfile$ = this.userService.userProfile;
+  
+  
+  faChevronDown = faChevronDown;
 }

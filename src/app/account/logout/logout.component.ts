@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { interval, map } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -14,16 +14,19 @@ import { interval, map } from 'rxjs';
   ]
 })
 export class LogoutComponent {
-  private auth: Auth = inject(Auth);
   private router: Router = inject(Router);
+  private authService = inject(AuthService);
 
   readonly dots$ = interval(500).pipe(
     map((value) => '.'.repeat(value + 1))
   );
 
   constructor() {
-    this.auth.signOut();
-    this.router.navigate(['/']);
+    this.logout();
   }
 
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/']);
+  }
 }

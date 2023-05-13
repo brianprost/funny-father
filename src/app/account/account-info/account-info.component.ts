@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Auth, user } from '@angular/fire/auth';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FunnyFatherUser } from 'src/app/models/FunnyFatherUser';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,7 +14,9 @@ import { UserService } from 'src/app/services/user.service';
         </figure>
         <div class="card-body items-center text-center">
           <h2 class="card-title">{{userProfile.firstName}} {{ userProfile.lastName }}</h2>
-          <input
+          <ng-container *ngFor="let attribute of [userProfile.email, userProfile.phone]">
+            <p>{{ attribute }}</p>
+          <!-- <input
             type="email"
             placeholder="{{ userProfile.email }}"
             class="input input-bordered w-full max-w-xs"
@@ -31,7 +33,8 @@ import { UserService } from 'src/app/services/user.service';
           />
           <div class="card-actions">
             <button class="btn btn-primary">Update account</button>
-          </div>
+          </div> -->
+          </ng-container>
         </div>
       </div>
     </div>
@@ -42,5 +45,15 @@ export class AccountInfoComponent {
 
   auth = inject(Auth);
   userService = inject(UserService);
-  userProfile$: BehaviorSubject<FunnyFatherUser> = this.userService.getUserProfile();
+  userProfile$: Observable<FunnyFatherUser | null> = this.userService.userProfile;
+
+  updateUserProfile() {
+    // do update user profile
+  }
+
+  constructor() {
+    this.userProfile$.subscribe((user) => {
+      console.log(user);
+    });
+  }
 }

@@ -13,5 +13,4 @@ import { FunnyFatherUser } from '../models/FunnyFatherUser';
   styles: [],
 })
 export class AccountComponent {
-
 }

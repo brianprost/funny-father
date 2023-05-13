@@ -14,5 +14,5 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AvatarComponent {
   private userService = inject(UserService);
-  userProfile$ = this.userService.getUserProfile();
+  userProfile$ = this.userService.userProfile;
 }
