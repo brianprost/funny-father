@@ -24,6 +24,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAnalytics, getAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { LogoutComponent } from './account/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     LoginComponent,
     SignupComponent,
     AddNewJokeComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
