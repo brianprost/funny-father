@@ -25,32 +25,31 @@ import { AuthService } from '../services/auth.service';
 
     <ng-template #advancedMenu>
       <div class="flex-1">
-        <a href="/"
-          ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
-        /></a>
+        <a href="/">
+          <img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20" />
+        </a>
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal rounded-xl p-0">
-          <li><a href="/">Home</a></li>
-          <li><a href="/jokes">Jokes</a></li>
-          <li tabindex="0" *ngIf="this.userProfile$ | async as userProfile">
-              <p>{{userProfile.firstName}} {{ userProfile.lastName }}  
+          <ng-container *ngIf="userProfile$ | async as userProfile; else unauthenticated">
+            <li><a href="/">Home</a></li>
+            <li><a href="/jokes">Jokes</a></li>
+            <li tabindex="0">
+              <p>
+                {{ userProfile.firstName }} {{ userProfile.lastName }}
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>
-            <ul class="p-2 bg-base-100 rounded-l-xl">
-              <ng-container *ngIf="userProfile$ | async as userProfile; then authenticated else unauthenticated" />
-                <ng-template #authenticated>
+              <ul class="p-2 bg-base-100 rounded-l-xl">
                   <li><a href="/account">Account</a></li>
                   <!-- <li><a href="/account/jokes">My Jokes</a></li> -->
                   <li><a href="/account/favorites">My Favorites</a></li>
                   <li><a href="/account/logout">Logout</a></li>
-                </ng-template>
-                <ng-template #unauthenticated>
-                  <li><a href="/account/signup">Signup</a></li>
-                  <li><a href="/account/login">Login</a></li>
-                </ng-template>
-            </ul>
-          </li>
+                </ul>
+              </li>
+            </ng-container>
+            <ng-template #unauthenticated>
+              <li><a href="/account/login">Login</a></li>
+            </ng-template>
         </ul>
       </div>
     </ng-template>
@@ -63,7 +62,6 @@ export class NavbarComponent {
   private authService = inject(AuthService);
   private userService = inject(UserService);
   userProfile$ = this.userService.userProfile;
-  
-  
+
   faChevronDown = faChevronDown;
 }

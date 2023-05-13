@@ -1,7 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, from, switchMap } from 'rxjs';
 
 @Component({
@@ -12,7 +12,9 @@ import { catchError, from, switchMap } from 'rxjs';
         <figure class="px-10 pt-10">
           <app-avatar></app-avatar>
         </figure>
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="card-body">
+          <h2 class="card-title">Login</h2>
+          <form [formGroup]="loginForm" (ngSubmit)="login()">
             <input
               type="email"
               placeholder="email"
@@ -26,13 +28,14 @@ import { catchError, from, switchMap } from 'rxjs';
               formControlName="password"
             />
             <div class="card-actions">
-              <!-- login button -->
-              <button class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+              <button class="btn btn-primary" [disabled]="loginForm.invalid">
+                Login
+              </button>
             </div>
-        </form>
+          </form>
         </div>
       </div>
-
+    </div>
   `,
   styles: [],
 })
@@ -40,12 +43,16 @@ export class LoginComponent {
   private auth: Auth = inject(Auth);
   private router: Router = inject(Router);
   private formBuilder: FormBuilder = inject(FormBuilder);
-  loginForm = this.formBuilder.group({
-    email: ['', Validators.required, Validators.email],
-    password: ['', Validators.required, Validators.minLength(8)],
-  });
+  loginForm: FormGroup;
 
-  login() {
+  constructor() {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.minLength(6)],
+    });
+  }
+
+  async login() {
     if (this.loginForm.invalid) {
       return;
     }
@@ -55,10 +62,10 @@ export class LoginComponent {
       password: string;
     };
 
-    from(signInWithEmailAndPassword(this.auth, email, password))
+    await from(signInWithEmailAndPassword(this.auth, email, password))
       .pipe(
         switchMap(() => this.router.navigate(['/'])),
-        catchError((error) => {
+        catchError(error => {
           console.error('Login failed:', error);
           return [];
         })
