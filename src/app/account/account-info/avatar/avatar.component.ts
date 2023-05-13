@@ -6,7 +6,7 @@ import { UserService } from 'src/app/services/user.service';
   template: `
     <div class="avatar">
       <div class="w-48 mask mask-squircle" *ngIf="userProfile$ | async as userProfile">
-        <img src="{{ userProfile.photoURL }}" />
+        <img src="{{ userProfile.photoUrl }}" />
       </div>
     </div>
   `,

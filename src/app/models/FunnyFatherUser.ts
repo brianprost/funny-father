@@ -4,5 +4,5 @@ export type FunnyFatherUser = {
   firstName: string;
   lastName: string;
   phone: string;
-  photoURL: string;
+  photoUrl: string;
 }

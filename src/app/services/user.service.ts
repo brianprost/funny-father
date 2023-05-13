@@ -19,7 +19,7 @@ export class UserService {
     lastName: '',
     email: '',
     phone: '',
-    photoURL: '',
+    photoUrl: '',
   });
 
   constructor() {
