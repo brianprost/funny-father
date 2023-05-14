@@ -1,5 +1,5 @@
 export default interface IJoke {
-  jokeId?: string | number;
+  jokeId: number;
   punchline: string;
   setup: string;
   author: string;

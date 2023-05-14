@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import IJoke from '../types/IJoke';
-import { Observable, map } from 'rxjs';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Component, OnInit, inject } from '@angular/core';
 import { JokeService } from '../services/joke.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -15,21 +13,28 @@ import { JokeService } from '../services/joke.service';
           <button class="btn btn-neutral" (click)="getNewJoke()">
             Get another joke
           </button>
+          <button class="btn btn-primary" (click)="saveJokeToProfile()">
+          Save Joke
+        </button>
         </div>
       </div>
     </section>
   `,
   styles: [],
 })
-export class HomeComponent {
-  joke$!: Observable<IJoke>;
-  jokesFromFirestore$!: any;
+export class HomeComponent implements OnInit {
+  private jokeService = inject(JokeService);
+  private authService = inject(AuthService);
 
-  constructor(private jokeService: JokeService) {
+  ngOnInit() {
     this.getNewJoke();
   }
 
   getNewJoke(): void {
     this.jokeService.getRandomJoke();
+  }
+
+  saveJokeToProfile() {
+    this.jokeService.saveJokeToProfile(this.jokeService.featuredJoke$.value);
   }
 }

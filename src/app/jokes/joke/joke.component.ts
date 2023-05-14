@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { JokeService } from 'src/app/services/joke.service';
 import IJoke from 'src/app/types/IJoke';
 
@@ -17,7 +17,6 @@ import IJoke from 'src/app/types/IJoke';
   styles: [],
 })
 export class JokeComponent {
+  private jokeService = inject(JokeService);
   readonly joke$ = this.jokeService.featuredJoke$;
-
-  constructor(public jokeService: JokeService) { }
 }

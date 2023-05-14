@@ -48,7 +48,7 @@ import IJoke from 'src/app/types/IJoke';
   `,
   styles: [],
 })
-export class AddNewJokeComponent implements OnInit {
+export class AddNewJokeComponent {
   isAppleDevice(): boolean {
     // returns whether the device is an apple device, including iOS, iPadOS, macOS, watchOS, and tvOS
     const appleDevices = ['iPhone', 'iPad', 'iPod', 'Macintosh', 'Watch', 'TV'];
@@ -63,8 +63,6 @@ export class AddNewJokeComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
-
   async addNewJoke(newJoke: IJoke) {
     // await this.ddb.addNewJoke(newJoke);
   }
@@ -77,6 +75,7 @@ export class AddNewJokeComponent implements OnInit {
       setup: this.newJokeFormGroup.get('setup')?.value as string,
       punchline: this.newJokeFormGroup.get('punchline')?.value as string,
       author: "anonymous because we haven't implemented auth yet",
+      jokeId: NaN,
     };
     // 2. add the joke
     await this.addNewJoke(newJoke);
