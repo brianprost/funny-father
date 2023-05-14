@@ -42,8 +42,6 @@ import { UserService } from 'src/app/services/user.service';
   styles: [],
 })
 export class AccountInfoComponent {
-
-  auth = inject(Auth);
   userService = inject(UserService);
   userProfile$: Observable<FunnyFatherUser | null> = this.userService.userProfile;
 

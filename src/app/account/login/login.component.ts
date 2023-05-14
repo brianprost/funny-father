@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, from, switchMap } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +41,7 @@ import { catchError, from, switchMap } from 'rxjs';
   styles: [],
 })
 export class LoginComponent {
-  private auth: Auth = inject(Auth);
+  private authService = inject(AuthService)
   private router: Router = inject(Router);
   private formBuilder: FormBuilder = inject(FormBuilder);
   loginForm: FormGroup;
@@ -62,14 +63,6 @@ export class LoginComponent {
       password: string;
     };
 
-    await from(signInWithEmailAndPassword(this.auth, email, password))
-      .pipe(
-        switchMap(() => this.router.navigate(['/'])),
-        catchError(error => {
-          console.error('Login failed:', error);
-          return [];
-        })
-      )
-      .subscribe();
+    this.authService.login(email, password);
   }
 }
