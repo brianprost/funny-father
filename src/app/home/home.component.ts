@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth.service';
           <button class="btn btn-neutral" (click)="getNewJoke()">
             Get another joke
           </button>
-          <button class="btn btn-primary" (click)="saveJokeToProfile()">
+          <button *ngIf="this.authService.user$ | async" class="btn btn-primary" (click)="saveJokeToProfile()">
           Save Joke
         </button>
         </div>
@@ -24,7 +24,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class HomeComponent implements OnInit {
   private jokeService = inject(JokeService);
-  private authService = inject(AuthService);
+  authService = inject(AuthService);
 
   ngOnInit() {
     this.getNewJoke();
