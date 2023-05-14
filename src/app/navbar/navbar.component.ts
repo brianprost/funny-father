@@ -1,11 +1,5 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { Auth, User, user } from '@angular/fire/auth';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { FunnyFatherUser } from '../models/FunnyFatherUser';
-import { Firestore } from '@angular/fire/firestore';
-import { collection, doc } from '@angular/fire/firestore';
-import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -35,17 +29,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
         <ul class="menu menu-horizontal rounded-xl p-0">
           <ng-container *ngIf="user$ | async as user; else unauthenticated">
             <li><a href="/">Home</a></li>
-            <li><a href="/jokes">Jokes</a></li>
+            <li><a href="/jokes">My Jokes</a></li>
             <li tabindex="0">
               <p *ngIf="userInfo$ | async as userInfo">
                 {{ userInfo.displayName }}
-                <!-- {{ user.firstName }} {{ user.lastName }} -->
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>
               <ul class="p-2 bg-base-100 rounded-l-xl">
                   <li><a href="/account">Account</a></li>
-                  <!-- <li><a href="/account/jokes">My Jokes</a></li> -->
-                  <li><a href="/account/favorites">My Favorites</a></li>
                   <li><a href="/account/logout">Logout</a></li>
                 </ul>
               </li>

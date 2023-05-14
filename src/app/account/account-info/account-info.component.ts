@@ -20,7 +20,7 @@ import { Observable, first } from 'rxjs';
         class="card w-96 bg-base-100 shadow-xl"
         *ngIf="userProfile$ | async as user"
       >
-        <figure class="px-10 pt-10" *ngIf>
+        <figure class="px-10 pt-10">
           <app-avatar></app-avatar>
         </figure>
         <div class="card-body items-center text-center">
