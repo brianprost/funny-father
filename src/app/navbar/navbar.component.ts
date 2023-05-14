@@ -7,7 +7,9 @@ import { Firestore } from '@angular/fire/firestore';
 import { collection, doc } from '@angular/fire/firestore';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-navbar',
   template: `
@@ -31,12 +33,13 @@ import { AuthService } from '../services/auth.service';
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal rounded-xl p-0">
-          <ng-container *ngIf="userProfile$ | async as userProfile; else unauthenticated">
+          <ng-container *ngIf="user$ | async as user; else unauthenticated">
             <li><a href="/">Home</a></li>
             <li><a href="/jokes">Jokes</a></li>
             <li tabindex="0">
-              <p>
-                {{ userProfile.firstName }} {{ userProfile.lastName }}
+              <p *ngIf="userInfo$ | async as userInfo">
+                {{ userInfo.displayName }}
+                <!-- {{ user.firstName }} {{ user.lastName }} -->
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>
               <ul class="p-2 bg-base-100 rounded-l-xl">
@@ -58,10 +61,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavbarComponent {
   @Input() showAdvancedMenu = true;
-
-  private authService = inject(AuthService);
-  private userService = inject(UserService);
-  userProfile$ = this.userService.userProfile;
+  authService = inject(AuthService);
+  user$ = this.authService.user$.pipe(untilDestroyed(this));
+  userInfo$ = this.authService.userInfo$.pipe(untilDestroyed(this));
 
   faChevronDown = faChevronDown;
 }
