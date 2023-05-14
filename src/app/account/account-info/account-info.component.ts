@@ -1,60 +1,68 @@
 import { Component, inject } from '@angular/core';
-import { Auth, UserInfo, user } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import {
+  Auth,
+  UserInfo,
+  user,
+  updateProfile,
+  updateEmail,
+  updatePassword,
+} from '@angular/fire/auth';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable, first } from 'rxjs';
 
+@UntilDestroy()
 @Component({
   selector: 'app-account-info',
   template: `
     <div class="flex h-screen justify-center items-center">
       <div
         class="card w-96 bg-base-100 shadow-xl"
-        *ngIf="userInfo$ | async as userInfo"
+        *ngIf="userProfile$ | async as user"
       >
         <figure class="px-10 pt-10" *ngIf>
           <app-avatar></app-avatar>
         </figure>
         <div class="card-body items-center text-center">
-          <ng-container *ngFor="let attribute of userInfo | keyvalue">
-            <!-- filter out anything that isn't displayName, email, phoneNumber, or photoUrl -->
-            <ng-container
-              *ngIf="
-                attribute.key === 'displayName' ||
-                attribute.key === 'email' ||
-                attribute.key === 'phoneNumber'
-              "
-            >
-              <h2 class="card-title" *ngIf="attribute.key === 'displayName'">
-                {{ attribute.value ?? 'nameless person' }}
-              </h2>
-              <input
-                *ngIf="attribute.key == 'displayName'"
-                type="text"
-                placeholder="{{ attribute.value ?? 'Your name' }}"
-                class="input input-bordered w-full max-w-xs"
-              />
-              <input
-                *ngIf="attribute.key == 'email'"
-                type="email"
-                placeholder="{{ attribute.value }}"
-                class="input input-bordered w-full max-w-xs"
-              />
-              <input
-                *ngIf="attribute.key == 'phoneNumber'"
-                type="tel"
-                placeholder="{{ attribute.value }}"
-                class="input input-bordered w-full max-w-xs"
-              />
-              <!-- <input
-                type="password"
-                placeholder="*************"
-                class="input input-bordered w-full max-w-xs"
-              /> -->
-            </ng-container>
-          </ng-container>
-          <div class="card-actions">
-            <!-- make it disabled if the form hasn't been touched -->
-            <button class="btn btn-primary">Update account</button>
-          </div>
+          <h2 class="card-title">
+            {{ user.displayName ?? 'nameless person' }}
+          </h2>
+          <form [formGroup]="profileForm" (ngSubmit)="updateUserProfile()">
+            <input
+              type="text"
+              placeholder="{{ user.displayName ?? 'Your name' }}"
+              formControlName="displayName"
+              class="input input-bordered w-full max-w-xs"
+            />
+            <input
+              type="email"
+              placeholder="{{ user.email }}"
+              formControlName="email"
+              class="input input-bordered w-full max-w-xs"
+            />
+            <input
+              type="password"
+              placeholder="New password"
+              formControlName="password"
+              class="input input-bordered w-full max-w-xs"
+            />
+            <!-- <input
+              type="tel"
+              placeholder="{{ user.phoneNumber }}"
+              formControlName="phoneNumber"
+              class="input input-bordered w-full max-w-xs"
+            /> -->
+            <div class="card-actions">
+              <!-- make it disabled if the form hasn't been touched -->
+              <button
+                class="btn btn-primary"
+                [disabled]="!profileForm.dirty"
+                type="submit"
+              >
+                Update account
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -63,9 +71,40 @@ import { Observable } from 'rxjs';
 })
 export class AccountInfoComponent {
   private auth = inject(Auth);
-  userInfo$: Observable<UserInfo | null> = user(this.auth);
+  private fb = inject(FormBuilder);
+  userProfile$: Observable<UserInfo | null> = user(this.auth);
+
+  profileForm = this.fb.group({
+    displayName: [''],
+    email: ['', Validators.email],
+    // phoneNumber: [''],
+    password: ['', Validators.minLength(12)]
+  });
+
+  ngOnInit() {
+    this.userProfile$.pipe(untilDestroyed(this)).subscribe(userInfo =>
+      this.profileForm.patchValue({
+        displayName: userInfo?.displayName,
+        email: userInfo?.email,
+        // phoneNumber: userInfo?.phoneNumber,
+      })
+    );
+  }
 
   updateUserProfile() {
-    // update any or all fields of the user's profile
+    if (this.profileForm.valid) {
+      const { displayName, email } = this.profileForm.value;
+      const fbUser = this.auth.currentUser;
+      this.userProfile$.pipe(first()).subscribe(user => {
+        if (user) {
+          updateProfile(fbUser!, {
+            displayName,
+            photoURL: user.photoURL,
+          });
+          updateEmail(fbUser!, email!);
+          updatePassword(fbUser!, 'password');
+        }
+      });
+    }
   }
 }
