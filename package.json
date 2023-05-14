@@ -26,6 +26,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@ngneat/until-destroy": "10.0.0-beta.0",
     "daisyui": "^2.43.2",
     "rxjs": "~7.6.0",
     "tslib": "^2.4.1",
