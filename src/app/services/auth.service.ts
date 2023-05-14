@@ -25,15 +25,11 @@ import { Firestore, addDoc, collection, doc } from '@angular/fire/firestore';
   providedIn: 'root',
 })
 export class AuthService {
-  static readonly USERS_SAVED_JOKES_COLLECTION = 'users-saved-jokes';
-
   private firebaseAuth = inject(Auth);
-  private firestore = inject(Firestore);
   private router = inject(Router);
 
   user$: Observable<User | null> = user(this.firebaseAuth);
   userInfo$: Observable<UserInfo | null> = user(this.firebaseAuth);
-  // userSubscription: Subscription = this.user$.pipe(untilDestroyed(this)).subscribe();
 
   async login(email: string, password: string) {
     from(signInWithEmailAndPassword(this.firebaseAuth, email, password))

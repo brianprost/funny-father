@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   Auth,
   UserInfo,
@@ -69,7 +69,7 @@ import { Observable, first } from 'rxjs';
   `,
   styles: [],
 })
-export class AccountInfoComponent {
+export class AccountInfoComponent implements OnInit {
   private auth = inject(Auth);
   private fb = inject(FormBuilder);
   userProfile$: Observable<UserInfo | null> = user(this.auth);

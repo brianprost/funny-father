@@ -1,39 +1,36 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import {
+  DocumentData,
   Firestore,
   addDoc,
   collection,
   collectionData,
 } from '@angular/fire/firestore';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, first, map, Observable } from 'rxjs';
 import IJoke from '../../types/IJoke';
-import { Auth, User } from '@angular/fire/auth';
+import { Auth, User, UserInfo, user } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { JokeService } from 'src/app/services/joke.service';
 
 @UntilDestroy()
 @Component({
   selector: 'app-joke-list',
   template: `
-    <ng-container *ngIf="user$ | async as user">
-      <section class="container mx-auto pb-20">
-        <table class="table w-full">
+    <ng-container *ngIf="userProfile$ | async as user">
+      <section class="container mx-auto pb-20 flex justify-center">
+        <table class="table w-[66vw]">
           <thead>
-            <th>setup</th>
-            <th>punchline</th>
+            <th>Setup</th>
+            <th>Punchline</th>
           </thead>
           <tbody>
-            <tr *ngFor="let joke of jokes$ | async">
-              <td>{{ joke.setup }}</td>
-              <td>{{ joke.punchline }}</td>
-              <td
-                ><button
-                  class="btn btn-primary"
-                  type="button"
-                  (click)="saveButtonClick(joke, user.uid)"
-                  >Save</button
-                ></td
-              >
+            <tr *ngFor="let joke of savedJokes$ | async">
+              <!-- since firestore has to have a default document in a collection, filter out that empty one -->
+              <ng-container *ngIf="joke['setup'] !== undefined">
+                <td>{{ joke['setup'] }}</td>
+                <td>{{ joke['punchline'] }}</td>
+              </ng-container>
             </tr>
           </tbody>
         </table>
@@ -44,16 +41,34 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class JokeListComponent {
   private firestore = inject(Firestore);
+  private firebaseAuth = inject(Auth);
   private authService = inject(AuthService);
-  readonly user$ = this.authService.user$.pipe(untilDestroyed(this));
-  readonly jokesCollection = collection(this.firestore, 'jokes');
-  readonly jokes$: Observable<IJoke[]> = collectionData(this.jokesCollection, {
-    idField: 'id',
-  }) as Observable<IJoke[]>;
+  private jokeService = inject(JokeService);
 
-  saveButtonClick(joke: IJoke, userUid: string): void {
-    // get the user id from the userSubject$ observable
-    addDoc(collection(this.firestore, `users/${userUid}/savedJokes`), joke);
-    alert(`Saved ${joke.jokeId} to your account!`);
+  userProfile$: Observable<UserInfo | null> = user(this.firebaseAuth);
+  savedJokes$: BehaviorSubject<IJoke[]> = new BehaviorSubject<IJoke[]>([]);
+
+  constructor() {
+    this.getSavedJokes();
   }
+
+  getSavedJokes() {
+    this.userProfile$.pipe(untilDestroyed(this)).subscribe(user => {
+      if (user) {
+        collectionData(
+          collection(this.firestore, `users/${user.uid}/saved-jokes`),
+          { idField: 'jokeId' }
+        ).subscribe(savedJokes => {
+          this.savedJokes$.next(savedJokes as IJoke[]);
+        });
+      }
+    });
+  }
+
+  // saveButtonClick(joke: IJoke, userUid: string): void {
+  //   // get the user id from the userSubject$ observable
+  //   addDoc(collection(this.firestore, `users/${userUid}/saved-jokes`), joke);
+  //   alert(`Saved ${joke.jokeId} to your account!`);
+  // }
+  // }
 }
