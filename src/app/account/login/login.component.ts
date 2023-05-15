@@ -49,7 +49,7 @@ export class LoginComponent {
   constructor() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.minLength(6)],
+      password: ['', Validators.minLength(8)],
     });
   }
 
