@@ -5,20 +5,11 @@ import {
   user,
   signInWithEmailAndPassword,
   UserInfo,
+  createUserWithEmailAndPassword,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  from,
-  map,
-  switchMap,
-  Subscription,
-} from 'rxjs';
+import { Observable, catchError, from, switchMap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import IJoke from '../types/IJoke';
-import { Firestore, addDoc, collection, doc } from '@angular/fire/firestore';
 
 @UntilDestroy()
 @Injectable({
@@ -30,6 +21,18 @@ export class AuthService {
 
   user$: Observable<User | null> = user(this.firebaseAuth);
   userInfo$: Observable<UserInfo | null> = user(this.firebaseAuth);
+
+  async signUpWithEmailAndPassword(email: string, password: string) {
+    from(createUserWithEmailAndPassword(this.firebaseAuth, email, password))
+      .pipe(
+        switchMap(() => this.router.navigate(['/'])),
+        catchError(error => {
+          console.error('Sign up failed:', error);
+          return [];
+        })
+      )
+      .subscribe();
+  }
 
   async login(email: string, password: string) {
     from(signInWithEmailAndPassword(this.firebaseAuth, email, password))

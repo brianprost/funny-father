@@ -1,22 +1,22 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
   template: `
-    <div class="container mx-auto flex justify-center">
-      <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="container mx-auto flex justify-center mt-20">
+      <div class="card w-96 bg-base-100 shadow-xl mx-4 lg:mx-0">
         <figure class="px-10 pt-10">
-          <img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20 rounded-lg" />
+          <img
+            src="assets/img/nav-logo.jpg"
+            alt="logo"
+            class="logo h-20 rounded-lg"
+          />
         </figure>
         <div class="card-body">
           <h2 class="card-title justify-center text-2xl mb-2">Sign Up</h2>
-          <form
-            [formGroup]="signUpForm"
-            (ngSubmit)="signUpWithEmailAndPassword()"
-          >
+          <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
             <input
               type="email"
               placeholder="email"
@@ -42,7 +42,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styles: [],
 })
 export class SignupComponent {
-  private auth = inject(Auth);
+  private authService = inject(AuthService);
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   signUpForm: FormGroup;
@@ -54,17 +54,13 @@ export class SignupComponent {
     });
   }
 
-  signUpWithEmailAndPassword() {
+  signUp() {
+    if (this.signUpForm.invalid) {
+      return;
+    }
+
     const { email, password } = this.signUpForm.value;
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        // ...
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
+
+    this.authService.signUpWithEmailAndPassword(email, password);
   }
 }

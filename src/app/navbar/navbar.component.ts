@@ -28,23 +28,22 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
       <div class="flex-none">
         <ul class="menu menu-horizontal rounded-xl p-0">
           <ng-container *ngIf="user$ | async as user; else unauthenticated">
-            <li><a href="/">Home</a></li>
-            <li><a href="/jokes">My Jokes</a></li>
             <li tabindex="0">
-              <p *ngIf="userInfo$ | async as userInfo">
+              <p *ngIf="userInfo$ | async as userInfo" class="text-xs lg:text-base">
                 {{ userInfo.displayName ?? user.email }}
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>
-              <ul class="p-2 bg-base-100 rounded-l-xl">
-                  <li><a href="/account">Account</a></li>
-                  <li><a href="/account/logout">Logout</a></li>
-                </ul>
-              </li>
-            </ng-container>
-            <ng-template #unauthenticated>
-              <li><a href="/account/signup">Sign Up</a></li>
-              <li><a href="/account/login">Login</a></li>
-            </ng-template>
+              <ul class="p-2 bg-base-100 rounded-l-xl w-full">
+                <li><a href="/jokes">My Jokes</a></li>
+                <li><a href="/account">Account</a></li>
+                <li><a href="/account/logout">Logout</a></li>
+              </ul>
+            </li>
+          </ng-container>
+          <ng-template #unauthenticated>
+            <li><a href="/account/signup">Sign Up</a></li>
+            <li><a href="/account/login">Login</a></li>
+          </ng-template>
         </ul>
       </div>
     </ng-template>

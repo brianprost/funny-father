@@ -6,7 +6,7 @@ import {
   collection,
   collectionData,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, first, map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import IJoke from '../../types/IJoke';
 import { Auth, User, UserInfo, user } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,22 +18,24 @@ import { JokeService } from 'src/app/services/joke.service';
   selector: 'app-joke-list',
   template: `
     <ng-container *ngIf="userProfile$ | async as user">
-      <section class="container mx-auto pb-20 flex justify-center">
-        <table class="table w-[66vw]">
-          <thead>
-            <th>Setup</th>
-            <th>Punchline</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let joke of savedJokes$ | async">
-              <!-- since firestore has to have a default document in a collection, filter out that empty one -->
-              <ng-container *ngIf="joke['setup'] !== undefined">
-                <td>{{ joke['setup'] }}</td>
-                <td>{{ joke['punchline'] }}</td>
-              </ng-container>
-            </tr>
-          </tbody>
-        </table>
+      <section
+        class="container mx-auto pb-20 flex justify-center flex-col items-center gap-4"
+      >
+        <div
+          class="card w-96 bg-base-100 shadow-xl"
+          *ngFor="let joke of savedJokes$ | async"
+        >
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">{{ joke['setup'] }}</h2>
+            <p>{{ joke['punchline'] }}</p>
+            <!-- <div class="card-actions">
+              <button
+                class="btn btn-sm btn-outline btn-secondary text-secondary-content"
+                >Throw out</button
+              >
+            </div> -->
+          </div>
+        </div>
       </section>
     </ng-container>
   `,
@@ -42,8 +44,6 @@ import { JokeService } from 'src/app/services/joke.service';
 export class JokeListComponent {
   private firestore = inject(Firestore);
   private firebaseAuth = inject(Auth);
-  private authService = inject(AuthService);
-  private jokeService = inject(JokeService);
 
   userProfile$: Observable<UserInfo | null> = user(this.firebaseAuth);
   savedJokes$: BehaviorSubject<IJoke[]> = new BehaviorSubject<IJoke[]>([]);
@@ -64,11 +64,4 @@ export class JokeListComponent {
       }
     });
   }
-
-  // saveButtonClick(joke: IJoke, userUid: string): void {
-  //   // get the user id from the userSubject$ observable
-  //   addDoc(collection(this.firestore, `users/${userUid}/saved-jokes`), joke);
-  //   alert(`Saved ${joke.jokeId} to your account!`);
-  // }
-  // }
 }

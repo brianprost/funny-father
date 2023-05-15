@@ -1,34 +1,32 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, from, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
   template: `
-    <div class="container mx-auto flex justify-center">
-      <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="container mx-auto flex justify-center mt-20">
+      <div class="card w-96 bg-base-100 shadow-xl mx-4 lg:mx-0">
         <figure class="px-10 pt-10">
-          <app-avatar></app-avatar>
+        <img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20 rounded-lg" />
         </figure>
         <div class="card-body">
-          <h2 class="card-title">Login</h2>
+          <h2 class="card-title justify-center text-2xl mb-2">Welcome back.</h2>
           <form [formGroup]="loginForm" (ngSubmit)="login()">
             <input
               type="email"
               placeholder="email"
-              class="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs mb-4"
               formControlName="email"
             />
             <input
               type="password"
               placeholder="password"
-              class="input input-bordered w-full max-w-xs"
+              class="input input-bordered w-full max-w-xs mb-4"
               formControlName="password"
             />
-            <div class="card-actions">
+            <div class="card-actions justify-end">
               <button class="btn btn-primary" [disabled]="loginForm.invalid">
                 Login
               </button>
