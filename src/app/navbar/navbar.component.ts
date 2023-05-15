@@ -29,7 +29,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
         <ul class="menu menu-horizontal rounded-xl p-0">
           <ng-container *ngIf="user$ | async as user; else unauthenticated">
             <li tabindex="0">
-              <p *ngIf="userInfo$ | async as userInfo" class="text-xs lg:text-base">
+              <p *ngIf="userInfo$ | async as userInfo" class="text-sm lg:text-base">
                 {{ userInfo.displayName ?? user.email }}
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>

@@ -8,14 +8,20 @@ import { AuthService } from '../services/auth.service';
     <section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
       <div class="hero-content text-center text-neutral drop-shadow-sm">
         <div class="max-w-md">
-            <app-joke></app-joke>
+          <app-joke></app-joke>
           <br />
-          <button class="btn btn-neutral" (click)="getNewJoke()">
-            Get another joke
-          </button>
-          <button *ngIf="this.authService.user$ | async" class="btn btn-primary" (click)="saveJokeToProfile()">
-          Save Joke
-        </button>
+          <div class="flex flex-col w-auto">
+            <button class="btn btn-neutral max-w-1/2" (click)="getNewJoke()">
+              Get another joke
+            </button>
+            <button
+              *ngIf="this.authService.user$ | async"
+              class="btn btn-primary"
+              (click)="saveJokeToProfile()"
+            >
+              Save Joke
+            </button>
+          </div>
         </div>
       </div>
     </section>
