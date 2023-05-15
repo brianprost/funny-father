@@ -32,7 +32,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
             <li><a href="/jokes">My Jokes</a></li>
             <li tabindex="0">
               <p *ngIf="userInfo$ | async as userInfo">
-                {{ userInfo.displayName }}
+                {{ userInfo.displayName ?? user.email }}
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>
               <ul class="p-2 bg-base-100 rounded-l-xl">
@@ -42,6 +42,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
               </li>
             </ng-container>
             <ng-template #unauthenticated>
+              <li><a href="/account/signup">Sign Up</a></li>
               <li><a href="/account/login">Login</a></li>
             </ng-template>
         </ul>
