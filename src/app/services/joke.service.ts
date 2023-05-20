@@ -4,10 +4,9 @@ import {
   Firestore,
   addDoc,
   collection,
-  collectionData,
   doc,
+  docData,
   getCountFromServer,
-  getDocs,
 } from '@angular/fire/firestore';
 import IJoke from '../types/IJoke';
 import { Auth, UserInfo, user } from '@angular/fire/auth';
@@ -50,21 +49,13 @@ export class JokeService {
     // set featured joke to a random joke
     let randomJokeIndex = NaN;
     do {
-      randomJokeIndex = Math.floor(
-        Math.random() * this.jokeListLength$.value
-      );
+      randomJokeIndex = Math.floor(Math.random() * this.jokeListLength$.value);
     } while (randomJokeIndex == this.previousRandomJokeIndex);
-    // get the joke at that index
-    const randomJoke$ = collectionData(this.jokesCollection, {
-      idField: 'jokeId',
-    }).pipe(
-      map(jokes => {
-        return jokes[randomJokeIndex] as IJoke;
-      })
-    );
-    // set the featured joke to that joke
-    randomJoke$.pipe(untilDestroyed(this)).subscribe(joke => {
-      this.featuredJoke$.next(joke);
+    // get the joke from the database. the index is the jokeId, which is the document id
+    const jokeDocRef = doc(this.firestore, `jokes/${randomJokeIndex}`);
+    const jokeDoc$ = docData(jokeDocRef);
+    jokeDoc$.pipe(untilDestroyed(this)).subscribe(joke => {
+      this.featuredJoke$.next(joke as IJoke);
     });
   }
 
