@@ -1,17 +1,13 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
-  DocumentData,
   Firestore,
-  addDoc,
   collection,
   collectionData,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-import IJoke from '../../types/IJoke';
-import { Auth, User, UserInfo, user } from '@angular/fire/auth';
-import { AuthService } from 'src/app/services/auth.service';
+import IJoke from 'src/app/types/IJoke';
+import { Auth, UserInfo, user } from '@angular/fire/auth';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { JokeService } from 'src/app/services/joke.service';
 
 @UntilDestroy()
 @Component({

@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { JokeService } from 'src/app/services/joke.service';
-import IJoke from 'src/app/types/IJoke';
 
 @Component({
   selector: 'app-joke',

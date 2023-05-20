@@ -1,7 +1,4 @@
-import { Component, OnInit, Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { map, Observable, Subscription } from 'rxjs';
-import { FunnyFatherUser } from '../models/FunnyFatherUser';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-account',

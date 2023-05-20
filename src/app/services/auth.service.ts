@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, catchError, from, switchMap } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Injectable({
