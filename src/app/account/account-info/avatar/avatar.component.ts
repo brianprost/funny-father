@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-avatar',
   template: `
     <div class="avatar">
       <div class="w-48 mask mask-squircle">
-        <img class="rounded-xl" src="https://placeimg.com/192/192/people" />
+        <img
+          src="{{
+            photoURL ??
+              'https://media.tenor.com/images/4eb6bb2dfbe0493ad1f08d840d2270fb/raw'
+          }}"
+        />
       </div>
     </div>
   `,
   styles: [],
 })
-export class AvatarComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class AvatarComponent {
+  @Input() photoURL: string | null = null;
 }

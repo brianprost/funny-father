@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../services/auth.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-navbar',
   template: `
@@ -18,37 +21,40 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
     <ng-template #advancedMenu>
       <div class="flex-1">
-        <a href="/"
-          ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
-        /></a>
+        <a href="/">
+          <img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20" />
+        </a>
       </div>
       <div class="flex-none">
-        <ul class="menu menu-horizontal p-0">
-          <li><a href="/">Home</a></li>
-          <li><a href="/jokes">Jokes</a></li>
-          <li tabindex="0">
-            <a href="/account">
-              Account
-              <fa-icon [icon]="faChevronDown"></fa-icon>
-            </a>
-            <ul class="p-2 bg-base-100">
-              <li><a href="/account/signup">Signup</a></li>
-              <li><a href="/account/login">Login</a></li>
-            </ul>
-          </li>
+        <ul class="menu menu-horizontal rounded-xl p-0">
+          <ng-container *ngIf="user$ | async as user; else unauthenticated">
+            <li tabindex="0">
+              <p *ngIf="userInfo$ | async as userInfo" class="text-sm lg:text-base">
+                {{ userInfo.displayName ?? user.email }}
+                <fa-icon [icon]="faChevronDown"></fa-icon>
+              </p>
+              <ul class="p-2 bg-base-100 rounded-l-xl w-full">
+                <li><a href="/jokes">My Jokes</a></li>
+                <li><a href="/account">Account</a></li>
+                <li><a href="/account/logout">Logout</a></li>
+              </ul>
+            </li>
+          </ng-container>
+          <ng-template #unauthenticated>
+            <li><a href="/account/signup">Sign Up</a></li>
+            <li><a href="/account/login">Login</a></li>
+          </ng-template>
         </ul>
       </div>
     </ng-template>
   `,
   styles: [],
 })
-export class NavbarComponent implements OnInit {
-  @Input() showAdvancedMenu: boolean = false;
+export class NavbarComponent {
+  @Input() showAdvancedMenu = true;
+  authService = inject(AuthService);
+  user$ = this.authService.user$.pipe(untilDestroyed(this));
+  userInfo$ = this.authService.userInfo$.pipe(untilDestroyed(this));
 
-  // icons
   faChevronDown = faChevronDown;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

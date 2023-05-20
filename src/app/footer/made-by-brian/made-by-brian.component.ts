@@ -1,25 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-made-by-brian',
   template: `
     <div
-      class="text-md flex h-16 items-center flex-col lg:flex-row gap-4 lg:gap-0 lg:justify-between bg-skin text-skin mx-4 text-secondary-content mb-6 lg:mb-0"
+      class="text-md flex h-16 items-center flex-row gap-0 justify-between mx-4 text-primary-content mb-0 mt-0 text-sm"
     >
       <a
-        href="https://brianprost.com/#contact"
+        href="https://brianprost.com/contact"
         target="_blank"
-        class="hover:text-secondary-focus hover:underline hover:font-bold"
+        class="hover:text-secondary-focus hover:underline hover:font-bold "
       >
-        Submit DMCA Complaint
+        <ng-container *ngIf="(isMobile$ | async) === false"
+          >Submit</ng-container
+        >
+        DMCA Complaint
       </a>
-      <div>
-        initially made by:
+      <div class="text-sm">
+        <ng-container *ngIf="(isMobile$ | async) === false"
+          >made by: </ng-container
+        >
         <a
           href="https://brianprost.com/"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-xl border-2 border-accent-content py-2 px-3 font-title text-2xl text-accent hover:bg-accent hover:text-base-100"
+          class="rounded-xl border-2 border-accent-content py-2 px-3 font-title text-primary-content text-sm hover:bg-accent hover:text-base-100"
         >
           bRIAN pRōST
         </a>
@@ -28,8 +34,7 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: [],
 })
-export class MadeByBrianComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class MadeByBrianComponent {
+  private mobileDetectorService = inject(MobileDetectorService);
+  isMobile$ = this.mobileDetectorService.isMobile$;
 }

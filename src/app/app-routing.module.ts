@@ -6,6 +6,7 @@ import { SignupComponent } from './account/signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { AddNewJokeComponent } from './jokes/add-new-joke/add-new-joke.component';
 import { JokesComponent } from './jokes/jokes.component';
+import { LogoutComponent } from './account/logout/logout.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'account/login',
     component: LoginComponent,
+  },
+  {
+    path: 'account/logout',
+    component: LogoutComponent,
   },
   {
     path: 'account/signup',

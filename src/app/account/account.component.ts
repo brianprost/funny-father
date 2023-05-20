@@ -1,7 +1,7 @@
 import { Component, OnInit, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
-import { IUser } from '../models/IUser';
+import { FunnyFatherUser } from '../models/FunnyFatherUser';
 
 @Component({
   selector: 'app-account',
@@ -12,8 +12,5 @@ import { IUser } from '../models/IUser';
   </div>`,
   styles: [],
 })
-export class AccountComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class AccountComponent {
 }
