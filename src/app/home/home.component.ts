@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { JokeService } from '../services/joke.service';
 import { AuthService } from '../services/auth.service';
 import { BehaviorSubject } from 'rxjs';
@@ -34,7 +34,7 @@ import { BehaviorSubject } from 'rxjs';
   `,
   styles: [],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   private jokeService = inject(JokeService);
   authService = inject(AuthService);
 
@@ -49,10 +49,6 @@ export class HomeComponent implements OnInit {
   saveJokeButtonStyle$: BehaviorSubject<string> = new BehaviorSubject<string>(
     this.saveJokeButtonStyles.default
   );
-
-  ngOnInit() {
-    this.getNewJoke();
-  }
 
   getNewJoke(): void {
     this.jokeService.getRandomJoke();

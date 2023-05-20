@@ -4,12 +4,14 @@ import {
   Firestore,
   addDoc,
   collection,
-  collectionData,
+  doc,
+  docData,
+  getCountFromServer,
 } from '@angular/fire/firestore';
 import IJoke from '../types/IJoke';
 import { Auth, UserInfo, user } from '@angular/fire/auth';
 import { AuthService } from './auth.service';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Injectable({
@@ -23,34 +25,36 @@ export class JokeService {
   userProfile$: Observable<UserInfo | null> = user(this.firebaseAuth);
 
   private readonly jokesCollection = collection(this.firestore, 'jokes');
-  private readonly jokes$ = collectionData(this.jokesCollection, {
-    idField: 'jokeId',
-  });
   private readonly jokeListLength$: BehaviorSubject<number> =
-    new BehaviorSubject<number>(0);
+    new BehaviorSubject<number>(9);
   readonly featuredJoke$: BehaviorSubject<IJoke> = new BehaviorSubject<IJoke>({
     jokeId: NaN,
     setup: 'Ope!',
     punchline: 'Thinking of a new joke...',
     author: 'Midwestern Dad',
   });
+  private previousRandomJokeIndex = NaN;
 
   constructor() {
     this.getLenthOfJokeList();
+    this.getRandomJoke();
   }
 
-  getLenthOfJokeList(): void {
-    this.jokes$.subscribe(jokes => {
-      this.jokeListLength$.next(jokes.length);
-    });
+  async getLenthOfJokeList() {
+    const countSnapshot = await getCountFromServer(this.jokesCollection);
+    this.jokeListLength$.next(countSnapshot.data().count);
   }
 
   getRandomJoke() {
     // set featured joke to a random joke
-    const randomJokeIndex = Math.floor(
-      Math.random() * this.jokeListLength$.value
-    );
-    this.jokes$.pipe(map(jokes => jokes[randomJokeIndex])).subscribe(joke => {
+    let randomJokeIndex = NaN;
+    do {
+      randomJokeIndex = Math.floor(Math.random() * this.jokeListLength$.value);
+    } while (randomJokeIndex == this.previousRandomJokeIndex);
+    // get the joke from the database. the index is the jokeId, which is the document id
+    const jokeDocRef = doc(this.firestore, `jokes/${randomJokeIndex}`);
+    const jokeDoc$ = docData(jokeDocRef);
+    jokeDoc$.pipe(untilDestroyed(this)).subscribe(joke => {
       this.featuredJoke$.next(joke as IJoke);
     });
   }
