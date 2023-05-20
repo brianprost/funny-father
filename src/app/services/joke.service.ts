@@ -5,13 +5,11 @@ import {
   addDoc,
   collection,
   collectionData,
-  doc,
-  getDocs,
 } from '@angular/fire/firestore';
 import IJoke from '../types/IJoke';
 import { Auth, UserInfo, user } from '@angular/fire/auth';
 import { AuthService } from './auth.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Injectable({
@@ -63,9 +61,9 @@ export class JokeService {
 
     const userUid = this.firebaseAuth.currentUser?.uid;
     if (!userUid) {
-      console.error('No user logged in');
+      message = '🤷 No user logged in';
+      console.error(message);
       wasSuccess = false;
-      message = 'No user logged in';
     } else {
       try {
         const userSavedJokesCollection = collection(
@@ -82,12 +80,12 @@ export class JokeService {
         // determine if was successful
         if (docRef.id) {
           wasSuccess = true;
-          message = 'Joke saved successfully';
+          message = '😀 Joke saved successfully!';
         }
       } catch (error) {
         console.error(error);
         wasSuccess = false;
-        message = 'Error saving joke';
+        message = '😭 Error saving joke';
       }
     }
     return { wasSuccess, message };
