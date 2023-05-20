@@ -58,25 +58,38 @@ export class JokeService {
   }
 
   async saveJokeToProfile(joke: IJoke) {
-    console.log(joke);
+    let wasSuccess = false;
+    let message = '';
 
     const userUid = this.firebaseAuth.currentUser?.uid;
     if (!userUid) {
       console.error('No user logged in');
-      return;
+      wasSuccess = false;
+      message = 'No user logged in';
+    } else {
+      try {
+        const userSavedJokesCollection = collection(
+          this.firestore,
+          `users/${userUid}/saved-jokes`
+        );
+        const docData = {
+          jokeId: joke.jokeId,
+          setup: joke.setup,
+          punchline: joke.punchline,
+          author: joke.author,
+        };
+        const docRef = await addDoc(userSavedJokesCollection, docData);
+        // determine if was successful
+        if (docRef.id) {
+          wasSuccess = true;
+          message = 'Joke saved successfully';
+        }
+      } catch (error) {
+        console.error(error);
+        wasSuccess = false;
+        message = 'Error saving joke';
+      }
     }
-
-    const userSavedJokesCollection = collection(
-      this.firestore,
-      `users/${userUid}/saved-jokes`
-    );
-    const docData = {
-      jokeId: joke.jokeId,
-      setup: joke.setup,
-      punchline: joke.punchline,
-      author: joke.author,
-    };
-    await addDoc(userSavedJokesCollection, docData);
+    return { wasSuccess, message };
   }
-
 }

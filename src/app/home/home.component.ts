@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { JokeService } from '../services/joke.service';
 import { AuthService } from '../services/auth.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,16 +11,21 @@ import { AuthService } from '../services/auth.service';
         <div class="max-w-md">
           <app-joke></app-joke>
           <br />
-          <div class="flex flex-col w-auto">
-            <button class="btn btn-neutral max-w-1/2" (click)="getNewJoke()">
+          <div class="flex flex-col justify-center gap-4">
+            <button
+              class="btn btn-neutral mx-auto w-3/5 lg:w-1/2"
+              (click)="getNewJoke()"
+            >
               Get another joke
             </button>
             <button
               *ngIf="this.authService.user$ | async"
-              class="btn btn-primary"
+              class=""
               (click)="saveJokeToProfile()"
             >
-              Save Joke
+              <ng-container *ngIf="saveJokeButtonText$ | async as text">{{
+                text
+              }}</ng-container>
             </button>
           </div>
         </div>
@@ -32,15 +38,41 @@ export class HomeComponent implements OnInit {
   private jokeService = inject(JokeService);
   authService = inject(AuthService);
 
+  saveJokeButtonStyles = {
+    default: 'btn btn-accent w-1/3 mx-auto lg:btn-sm btn-outline text-xs',
+    success: 'btn btn-success w-1/3 mx-auto lg:btn-sm btn-outline text-xs',
+    error: 'btn btn-error w-1/3 mx-auto lg:btn-sm btn-outline text-xs',
+  };
+  saveJokeButtonText$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    'Save Joke'
+  );
+  saveJokeButtonStyle$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    this.saveJokeButtonStyles.default
+  );
+
   ngOnInit() {
     this.getNewJoke();
   }
 
   getNewJoke(): void {
     this.jokeService.getRandomJoke();
+    // TODO: get if this joke is already saved to profile
+
+    this.resetSaveJokeButton();
   }
 
-  saveJokeToProfile() {
-    this.jokeService.saveJokeToProfile(this.jokeService.featuredJoke$.value);
+  resetSaveJokeButton(): void {
+    this.saveJokeButtonText$.next('Save Joke');
+    this.saveJokeButtonStyle$.next(this.saveJokeButtonStyles.default);
+  }
+
+  async saveJokeToProfile() {
+    const saveJokeToFirestore = await this.jokeService.saveJokeToProfile(
+      this.jokeService.featuredJoke$.value
+    );
+    this.saveJokeButtonText$.next(saveJokeToFirestore.message);
+    saveJokeToFirestore.wasSuccess
+      ? this.saveJokeButtonStyle$.next(this.saveJokeButtonStyles.success)
+      : this.saveJokeButtonStyle$.next(this.saveJokeButtonStyles.error);
   }
 }
