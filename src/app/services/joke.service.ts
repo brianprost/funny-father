@@ -55,7 +55,7 @@ export class JokeService {
     const jokeDocRef = doc(this.firestore, `jokes/${randomJokeIndex}`);
     const jokeDoc$ = docData(jokeDocRef);
     jokeDoc$.pipe(untilDestroyed(this)).subscribe(joke => {
-      this.featuredJoke$.next(joke as IJoke);
+      this.featuredJoke$.next({ jokeId: randomJokeIndex, ...joke } as IJoke);
     });
   }
 
