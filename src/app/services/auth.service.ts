@@ -6,6 +6,8 @@ import {
   signInWithEmailAndPassword,
   UserInfo,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, catchError, from, switchMap } from 'rxjs';
@@ -33,6 +35,18 @@ export class AuthService {
       )
       .subscribe();
   }
+
+  // async signUpWithGoogle() {
+  //   from(this.firebaseAuth.signInWithPopup(new GoogleAuthProvider()))
+  //     .pipe(
+  //       switchMap(() => this.router.navigate(['/'])),
+  //       catchError(error => {
+  //         console.error('Sign up failed:', error);
+  //         return [];
+  //       })
+  //     )
+  //     .subscribe();
+  // }
 
   async login(email: string, password: string) {
     from(signInWithEmailAndPassword(this.firebaseAuth, email, password))

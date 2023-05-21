@@ -32,6 +32,16 @@ import { AuthService } from 'src/app/services/auth.service';
             <div class="card-actions justify-end">
               <button class="btn btn-primary" [disabled]="signUpForm.invalid">
                 Sign Up
+            <!-- google -->
+            <div class="card-actions justify-center mt-4">
+              <button class="btn btn-ghost btn-sm rounded-btn">
+                <!-- put google logo here -->
+                <img
+                  src="assets/img/google-logo.png"
+                  alt="google logo"
+                  class="h-6"
+                />
+                Sign Up with Google
               </button>
             </div>
           </form>
@@ -63,4 +73,8 @@ export class SignupComponent {
 
     this.authService.signUpWithEmailAndPassword(email, password);
   }
+
+  // signUpWithGoogle() {
+  //   this.authService.signUpWithGoogle();
+  // }
 }
