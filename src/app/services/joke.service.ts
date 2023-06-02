@@ -7,6 +7,7 @@ import {
   doc,
   docData,
   getCountFromServer,
+  setDoc,
 } from '@angular/fire/firestore';
 import IJoke from '../types/IJoke';
 import { Auth, UserInfo, user } from '@angular/fire/auth';
@@ -93,5 +94,30 @@ export class JokeService {
       }
     }
     return { wasSuccess, message };
+  }
+
+  async addNewJoke(setup: string, punchline: string) {
+
+    
+    const userUid = this.firebaseAuth.currentUser?.uid;
+    if (!userUid) {
+      console.error('No user logged in');
+      return;
+    }
+    
+    let author = 'unknown';
+    this.userProfile$.pipe(untilDestroyed(this)).subscribe(user => author = user?.displayName || 'unknown');
+
+    // print count of jokes in database
+    const countSnapshot = await getCountFromServer(this.jokesCollection);
+    console.log(`There are ${countSnapshot.data().count} jokes in the database`);
+
+    const newJokeData = {
+      setup,
+      punchline,
+      author
+    };
+    const newJokeRef = await setDoc(doc(this.firestore, `jokes/${countSnapshot.data().count}`), newJokeData);
+    console.log(`Added new joke with id ${newJokeRef}`);
   }
 }
