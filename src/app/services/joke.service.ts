@@ -27,7 +27,7 @@ export class JokeService {
 
   private readonly jokesCollection = collection(this.firestore, 'jokes');
   private readonly jokeListLength$: BehaviorSubject<number> =
-    new BehaviorSubject<number>(9);
+    new BehaviorSubject<number>(52);
   readonly featuredJoke$: BehaviorSubject<IJoke> = new BehaviorSubject<IJoke>({
     jokeId: NaN,
     setup: 'Ope!',

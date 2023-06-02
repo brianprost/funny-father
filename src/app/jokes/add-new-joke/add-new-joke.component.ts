@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+// GENERATED: 8f3c3d1c-5f9d-4c5c-9a2d-8f9d1d9d0b4d
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -13,7 +14,9 @@ import IJoke from 'src/app/types/IJoke';
       <div class="card w-96 bg-base-100 shadow-xl">
         <ng-container *ngIf="isAppleDevice(); else getAMac">
           <div class="card-body">
-            <ng-container *ngIf="readyForNewJoke$ | async; else submissionStatus">
+            <ng-container
+              *ngIf="readyForNewJoke$ | async; else submissionStatus"
+            >
               <h2 class="card-title">Add new joke</h2>
               <form [formGroup]="newJokeFormGroup" (ngSubmit)="addNewJoke()">
                 <input
@@ -31,12 +34,16 @@ import IJoke from 'src/app/types/IJoke';
                   formControlName="punchline"
                 />
                 <div class="card-actions justify-end mt-4">
-                  <button type="submit" class="btn btn-primary">Add joke</button>
+                    <button type="submit" class="btn btn-primary">
+                      Add joke
+                    </button>
                 </div>
               </form>
             </ng-container>
             <ng-template #submissionStatus>
-              <ng-container *ngIf="submissionStatusText$ | async as submissionStatusText">
+              <ng-container
+                *ngIf="submissionStatusText$ | async as submissionStatusText"
+              >
                 <div class="flex flex-col justify-center items-center">
                   <h3 class="text-2xl">{{ submissionStatusText }}</h3>
                   <div class="spinner"></div>
@@ -66,6 +73,7 @@ export class AddNewJokeComponent {
   private jokeService = inject(JokeService);
   private router: Router = inject(Router);
   private formBuilder = inject(FormBuilder);
+
   readonly readyForNewJoke$: BehaviorSubject<boolean> = new BehaviorSubject(
     true
   );
@@ -81,7 +89,7 @@ export class AddNewJokeComponent {
   isAppleDevice(): boolean {
     // returns whether the device is an apple device, including iOS, iPadOS, macOS, watchOS, and tvOS
     const appleDevices = ['iPhone', 'iPad', 'iPod', 'Macintosh', 'Watch', 'TV'];
-    return appleDevices.some((device) =>
+    return appleDevices.some(device =>
       window.navigator.userAgent.includes(device)
     );
   }
@@ -93,32 +101,14 @@ export class AddNewJokeComponent {
         setup: string;
         punchline: string;
       };
-      
+
       await this.jokeService.addNewJoke(setup, punchline);
       // if joke was added successfully, set text to reflect that, wait 2 seconds and then reset the form
       this.submissionStatusText$.next('Joke added successfully 🎉');
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 1500));
       this.submissionStatusText$.next('Adding joke...');
       this.newJokeFormGroup.reset();
     }
     this.readyForNewJoke$.next(true);
   }
-
-  // // handle button click
-  // async onSubmit() {
-  //   // TODO is it really the best idea to use 'as' here?
-  //   // 1. get the joke from the form
-  //   const newJoke: IJoke = {
-  //     setup: this.newJokeFormGroup.get('setup')?.value as string,
-  //     punchline: this.newJokeFormGroup.get('punchline')?.value as string,
-  //     author: "anonymous because we haven't implemented auth yet",
-  //     jokeId: NaN,
-  //   };
-  //   // 2. add the joke
-  //   await this.addNewJoke(newJoke);
-  //   // 3. clear the form
-  //   this.newJokeFormGroup.reset();
-  //   // 4. navigate back to the joke list
-  //   this.router.navigate(['/']);
-  // }
 }

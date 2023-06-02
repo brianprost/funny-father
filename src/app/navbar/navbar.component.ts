@@ -35,7 +35,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
               </p>
               <ul class="p-2 bg-base-100 rounded-l-xl w-full">
                 <li><a href="/jokes">My Jokes</a></li>
-                <li><a href="/jokes/add">Add Joke</a></li>
+                <li *ngIf="isJokeWriter$ | async"><a href="/jokes/add">Add Joke</a></li>
                 <li><a href="/account">Account</a></li>
                 <li><a href="/account/logout">Logout</a></li>
               </ul>
@@ -56,6 +56,7 @@ export class NavbarComponent {
   authService = inject(AuthService);
   user$ = this.authService.user$.pipe(untilDestroyed(this));
   userInfo$ = this.authService.userInfo$.pipe(untilDestroyed(this));
+  isJokeWriter$ = this.authService.isJokeWriter$.pipe(untilDestroyed(this));
 
   faChevronDown = faChevronDown;
 }

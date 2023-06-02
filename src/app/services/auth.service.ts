@@ -7,9 +7,10 @@ import {
   UserInfo,
   createUserWithEmailAndPassword,
 } from '@angular/fire/auth';
+import { Firestore, collection, doc, getDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable, catchError, from, switchMap } from 'rxjs';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { BehaviorSubject, Observable, catchError, from, switchMap } from 'rxjs';
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Injectable({
@@ -18,9 +19,14 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 export class AuthService {
   private firebaseAuth = inject(Auth);
   private router = inject(Router);
+  private firestore = inject(Firestore);
 
   user$: Observable<User | null> = user(this.firebaseAuth);
   userInfo$: Observable<UserInfo | null> = user(this.firebaseAuth);
+  isJokeWriter$: Observable<boolean> = this.user$.pipe(
+    switchMap(() => this.isJokeWriter()),
+    untilDestroyed(this)
+  );
 
   async signUpWithEmailAndPassword(email: string, password: string) {
     from(createUserWithEmailAndPassword(this.firebaseAuth, email, password))
@@ -48,5 +54,13 @@ export class AuthService {
 
   async logout() {
     await this.firebaseAuth.signOut();
+  }
+
+  async isJokeWriter() {
+    const collectionRef = collection(this.firestore, 'jokeWriters');
+    const uid = this.firebaseAuth.currentUser?.uid; // typescript was being weird
+    const docRef = doc(collectionRef, uid);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists();
   }
 }
