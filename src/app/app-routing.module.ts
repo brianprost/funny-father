@@ -11,6 +11,8 @@ import { LogoutComponent } from './account/logout/logout.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'jokes', component: JokesComponent },
+  // add new joke
+  { path: 'jokes/add', component: AddNewJokeComponent},
   // account, and then account/login, account/signupaccount/info
   {
     path: 'account',

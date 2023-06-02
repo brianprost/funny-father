@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { JokeService } from 'src/app/services/joke.service';
 import IJoke from 'src/app/types/IJoke';
 
 @Component({
@@ -10,26 +13,36 @@ import IJoke from 'src/app/types/IJoke';
       <div class="card w-96 bg-base-100 shadow-xl">
         <ng-container *ngIf="isAppleDevice(); else getAMac">
           <div class="card-body">
-            <h2 class="card-title">Add new joke</h2>
-            <form [formGroup]="newJokeFormGroup" (ngSubmit)="onSubmit()">
-              <input
-                type="text"
-                id="setup"
-                placeholder="Setup"
-                class="input input-bordered w-full my-2"
-                formControlName="setup"
-              />
-              <input
-                type="text"
-                id="punchline"
-                placeholder="Punchline"
-                class="input input-bordered w-full my-2"
-                formControlName="punchline"
-              />
-              <div class="card-actions justify-end mt-4">
-                <button type="submit" class="btn btn-primary">Add joke</button>
-              </div>
-            </form>
+            <ng-container *ngIf="readyForNewJoke$ | async; else submissionStatus">
+              <h2 class="card-title">Add new joke</h2>
+              <form [formGroup]="newJokeFormGroup" (ngSubmit)="addNewJoke()">
+                <input
+                  type="text"
+                  id="setup"
+                  placeholder="Setup"
+                  class="input input-bordered w-full my-2"
+                  formControlName="setup"
+                />
+                <input
+                  type="text"
+                  id="punchline"
+                  placeholder="Punchline"
+                  class="input input-bordered w-full my-2"
+                  formControlName="punchline"
+                />
+                <div class="card-actions justify-end mt-4">
+                  <button type="submit" class="btn btn-primary">Add joke</button>
+                </div>
+              </form>
+            </ng-container>
+            <ng-template #submissionStatus>
+              <ng-container *ngIf="submissionStatusText$ | async as submissionStatusText">
+                <div class="flex flex-col justify-center items-center">
+                  <h3 class="text-2xl">{{ submissionStatusText }}</h3>
+                  <div class="spinner"></div>
+                </div>
+              </ng-container>
+            </ng-template>
           </div>
         </ng-container>
       </div>
@@ -49,6 +62,22 @@ import IJoke from 'src/app/types/IJoke';
   styles: [],
 })
 export class AddNewJokeComponent {
+  private authService = inject(AuthService);
+  private jokeService = inject(JokeService);
+  private router: Router = inject(Router);
+  private formBuilder = inject(FormBuilder);
+  readonly readyForNewJoke$: BehaviorSubject<boolean> = new BehaviorSubject(
+    true
+  );
+  readonly submissionStatusText$: BehaviorSubject<string> = new BehaviorSubject(
+    'Adding joke...'
+  );
+
+  newJokeFormGroup = new FormGroup({
+    setup: new FormControl('', { nonNullable: true }),
+    punchline: new FormControl('', { nonNullable: true }),
+  });
+
   isAppleDevice(): boolean {
     // returns whether the device is an apple device, including iOS, iPadOS, macOS, watchOS, and tvOS
     const appleDevices = ['iPhone', 'iPad', 'iPod', 'Macintosh', 'Watch', 'TV'];
@@ -56,32 +85,40 @@ export class AddNewJokeComponent {
       window.navigator.userAgent.includes(device)
     );
   }
-  newJokeFormGroup = new FormGroup({
-    setup: new FormControl('', { nonNullable: true }),
-    punchline: new FormControl('', { nonNullable: true }),
-  });
 
-  constructor(private router: Router) {}
-
-  async addNewJoke(newJoke: IJoke) {
-    // await this.ddb.addNewJoke(newJoke);
+  async addNewJoke() {
+    this.readyForNewJoke$.next(false);
+    if (!this.newJokeFormGroup.invalid) {
+      const { setup, punchline } = this.newJokeFormGroup.value as {
+        setup: string;
+        punchline: string;
+      };
+      
+      await this.jokeService.addNewJoke(setup, punchline);
+      // if joke was added successfully, set text to reflect that, wait 2 seconds and then reset the form
+      this.submissionStatusText$.next('Joke added successfully 🎉');
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      this.submissionStatusText$.next('Adding joke...');
+      this.newJokeFormGroup.reset();
+    }
+    this.readyForNewJoke$.next(true);
   }
 
-  // handle button click
-  async onSubmit() {
-    // TODO is it really the best idea to use 'as' here?
-    // 1. get the joke from the form
-    const newJoke: IJoke = {
-      setup: this.newJokeFormGroup.get('setup')?.value as string,
-      punchline: this.newJokeFormGroup.get('punchline')?.value as string,
-      author: "anonymous because we haven't implemented auth yet",
-      jokeId: NaN,
-    };
-    // 2. add the joke
-    await this.addNewJoke(newJoke);
-    // 3. clear the form
-    this.newJokeFormGroup.reset();
-    // 4. navigate back to the joke list
-    this.router.navigate(['/']);
-  }
+  // // handle button click
+  // async onSubmit() {
+  //   // TODO is it really the best idea to use 'as' here?
+  //   // 1. get the joke from the form
+  //   const newJoke: IJoke = {
+  //     setup: this.newJokeFormGroup.get('setup')?.value as string,
+  //     punchline: this.newJokeFormGroup.get('punchline')?.value as string,
+  //     author: "anonymous because we haven't implemented auth yet",
+  //     jokeId: NaN,
+  //   };
+  //   // 2. add the joke
+  //   await this.addNewJoke(newJoke);
+  //   // 3. clear the form
+  //   this.newJokeFormGroup.reset();
+  //   // 4. navigate back to the joke list
+  //   this.router.navigate(['/']);
+  // }
 }

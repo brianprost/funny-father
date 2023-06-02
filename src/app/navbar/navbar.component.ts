@@ -35,6 +35,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
               </p>
               <ul class="p-2 bg-base-100 rounded-l-xl w-full">
                 <li><a href="/jokes">My Jokes</a></li>
+                <li><a href="/jokes/add">Add Joke</a></li>
                 <li><a href="/account">Account</a></li>
                 <li><a href="/account/logout">Logout</a></li>
               </ul>
