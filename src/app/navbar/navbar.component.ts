@@ -7,7 +7,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 @Component({
   selector: 'app-navbar',
   template: `
-    <div class="navbar bg-primary z-50">
+    <div class="navbar bg-primary z-100">
       <ng-container *ngIf="!showAdvancedMenu; else advancedMenu">
         <div class="navbar-start"></div>
         <div class="navbar-center">
