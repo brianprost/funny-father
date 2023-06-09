@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { MobileDetectorService } from './mobile-detector.service';
+import { MobileDetectorService } from "./mobile-detector.service";
 
-describe('MobileDetectorService', () => {
-  let service: MobileDetectorService;
+describe("MobileDetectorService", () => {
+	let service: MobileDetectorService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(MobileDetectorService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+		service = TestBed.inject(MobileDetectorService);
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

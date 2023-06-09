@@ -1,27 +1,27 @@
-import { Injectable } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { fromEvent, Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: "root",
 })
 export class MobileDetectorService {
-  isMobile$: Observable<boolean>;
+	isMobile$: Observable<boolean>;
 
-  constructor() {
-    this.isMobile$ = this.createMobileObservable();
-  }
+	constructor() {
+		this.isMobile$ = this.createMobileObservable();
+	}
 
-  private createMobileObservable(): Observable<boolean> {
-    const mobileMediaQuery = window.matchMedia('(max-width: 639px)');
-    const mobileChanges$ = fromEvent<MediaQueryListEvent>(
-      mobileMediaQuery,
-      'change'
-    );
+	private createMobileObservable(): Observable<boolean> {
+		const mobileMediaQuery = window.matchMedia("(max-width: 639px)");
+		const mobileChanges$ = fromEvent<MediaQueryListEvent>(
+			mobileMediaQuery,
+			"change"
+		);
 
-    return mobileChanges$.pipe(
-      map(event => event.matches),
-      startWith(mobileMediaQuery.matches)
-    );
-  }
+		return mobileChanges$.pipe(
+			map((event) => event.matches),
+			startWith(mobileMediaQuery.matches)
+		);
+	}
 }
