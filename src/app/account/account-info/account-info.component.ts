@@ -27,7 +27,11 @@ import { Observable, first } from "rxjs";
 					<h2 class="card-title">
 						{{ user.displayName ?? "nameless person" }}
 					</h2>
-					<form [formGroup]="profileForm" (ngSubmit)="updateUserProfile()">
+					<form
+						[formGroup]="profileForm"
+						(ngSubmit)="updateUserProfile()"
+						class="flex flex-col gap-y-4 w-full"
+					>
 						<input
 							type="text"
 							placeholder="{{ user.displayName ?? 'Your name' }}"
@@ -52,7 +56,7 @@ import { Observable, first } from "rxjs";
               formControlName="phoneNumber"
               class="input input-bordered w-full max-w-xs"
             /> -->
-						<div class="card-actions">
+						<div class="card-actions justify-end">
 							<button
 								class="btn btn-primary"
 								[disabled]="!profileForm.dirty"
