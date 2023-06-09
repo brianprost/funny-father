@@ -96,12 +96,15 @@ export class AccountInfoComponent implements OnInit {
 			const fbUser = this.auth.currentUser;
 			this.userProfile$.pipe(first()).subscribe((user) => {
 				if (user) {
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					updateProfile(fbUser!, {
 						displayName,
 						photoURL: user.photoURL,
-					});
+					}) ?? false;
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					updateEmail(fbUser!, email!);
-					updatePassword(fbUser!, "password");
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+					updatePassword(fbUser!, this.profileForm.value.password!);
 				}
 			});
 		}
