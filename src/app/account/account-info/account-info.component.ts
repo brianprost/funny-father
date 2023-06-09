@@ -53,14 +53,13 @@ import { Observable, first } from 'rxjs';
               class="input input-bordered w-full max-w-xs"
             /> -->
             <div class="card-actions">
-              <!-- make it disabled if the form hasn't been touched -->
-              <!-- <button
+              <button
                 class="btn btn-primary"
                 [disabled]="!profileForm.dirty"
                 type="submit"
               >
                 Update account
-              </button> -->
+              </button>
             </div>
           </form>
         </div>
