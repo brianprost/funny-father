@@ -2,6 +2,7 @@ import { Component, inject } from "@angular/core";
 import { JokeService } from "../services/joke.service";
 import { AuthService } from "../services/auth.service";
 import { BehaviorSubject } from "rxjs";
+import { MobileDetectorService } from "../services/mobile-detector.service";
 
 @Component({
 	selector: "app-home",
@@ -9,9 +10,14 @@ import { BehaviorSubject } from "rxjs";
 		<section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
 			<div class="hero-content text-center text-neutral drop-shadow-sm">
 				<div class="max-w-md">
-					<button class="btn-ghost" (click)="getNewJoke()">
+					<ng-container *ngIf="isMobile$ | async as isMobile; else desktop">
+						<button class="btn-ghost rounded-xl" (click)="getNewJoke()">
+							<app-joke></app-joke>
+						</button>
+					</ng-container>
+					<ng-template #desktop>
 						<app-joke></app-joke>
-					</button>
+					</ng-template>
 					<br />
 					<div class="flex flex-col justify-center gap-4">
 						<button
@@ -39,6 +45,8 @@ import { BehaviorSubject } from "rxjs";
 export class HomeComponent {
 	private jokeService = inject(JokeService);
 	authService = inject(AuthService);
+	mobileDetectorService = inject(MobileDetectorService);
+	isMobile$ = this.mobileDetectorService.isMobile$;
 
 	saveJokeButtonStyles = {
 		default: "btn btn-accent w-1/3 mx-auto lg:btn-sm btn-outline text-xs",
