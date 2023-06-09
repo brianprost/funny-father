@@ -1,6 +1,6 @@
-# NgDadJokes
+# Funny Father
 
-This is the front end for the Dad Jokes project.
+Basically my playground for Angular stuff
 
 It's built using
 
