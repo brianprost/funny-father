@@ -3,11 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="bg-primary h-screen font-sans flex flex-col jusify-between">
-      <div>
-        <!-- TODO: firebase remote config -->
-        <app-navbar [showAdvancedMenu]="true"></app-navbar> 
-      </div>
+    <div class="bg-primary h-screen">
+      <!-- TODO: firebase remote config -->
+      <app-navbar [showAdvancedMenu]="true"></app-navbar>
       <div>
         <router-outlet></router-outlet>
       </div>
