@@ -1,11 +1,10 @@
 // GENERATED: 8f3c3d1c-5f9d-4c5c-9a2d-8f9d1d9d0b4d
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { JokeService } from "src/app/services/joke.service";
-import IJoke from "src/app/types/IJoke";
 
 @Component({
 	selector: "app-add-new-joke",

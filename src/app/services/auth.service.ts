@@ -9,7 +9,7 @@ import {
 } from "@angular/fire/auth";
 import { Firestore, collection, doc, getDoc } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { BehaviorSubject, Observable, catchError, from, switchMap } from "rxjs";
+import { Observable, catchError, from, switchMap } from "rxjs";
 import { untilDestroyed, UntilDestroy } from "@ngneat/until-destroy";
 
 @UntilDestroy()
