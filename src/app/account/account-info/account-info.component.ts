@@ -40,12 +40,12 @@ import { Observable, first } from 'rxjs';
               formControlName="email"
               class="input input-bordered w-full max-w-xs"
             />
-            <input
+            <!-- <input
               type="password"
               placeholder="New password"
               formControlName="password"
               class="input input-bordered w-full max-w-xs"
-            />
+            /> -->
             <!-- <input
               type="tel"
               placeholder="{{ user.phoneNumber }}"
@@ -53,7 +53,6 @@ import { Observable, first } from 'rxjs';
               class="input input-bordered w-full max-w-xs"
             /> -->
             <div class="card-actions">
-              <!-- make it disabled if the form hasn't been touched -->
               <button
                 class="btn btn-primary"
                 [disabled]="!profileForm.dirty"
