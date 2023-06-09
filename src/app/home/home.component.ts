@@ -9,7 +9,9 @@ import { BehaviorSubject } from "rxjs";
 		<section id="home" class="hero min-h-[calc(100vh-180px)] bg-primary">
 			<div class="hero-content text-center text-neutral drop-shadow-sm">
 				<div class="max-w-md">
-					<app-joke></app-joke>
+					<button class="btn-ghost" (click)="getNewJoke()">
+						<app-joke></app-joke>
+					</button>
 					<br />
 					<div class="flex flex-col justify-center gap-4">
 						<button
