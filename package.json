@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"build": "ng build",
-		"lint": "ng lint",
+		"format": "prettier --ignore-unknown --write *",
+		"lint": "eslint . --max-warnings 0 --report-unused-disable-directives",
 		"ng": "ng",
 		"start": "ng serve",
 		"test": "ng test",
