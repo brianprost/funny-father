@@ -8,18 +8,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   selector: 'app-navbar',
   template: `
     <div class="navbar bg-primary">
-      <ng-container *ngIf="!showAdvancedMenu; else advancedMenu">
-        <div class="navbar-start"></div>
-        <div class="navbar-center">
-          <a href="/"
-            ><img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20"
-          /></a>
-        </div>
-        <div class="navbar-end"></div>
-      </ng-container>
-    </div>
-
-    <ng-template #advancedMenu>
       <div class="flex-1">
         <a href="/">
           <img src="assets/img/nav-logo.jpg" alt="logo" class="logo h-20" />
@@ -29,13 +17,18 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
         <ul class="menu menu-horizontal rounded-xl p-0">
           <ng-container *ngIf="user$ | async as user; else unauthenticated">
             <li tabindex="0">
-              <p *ngIf="userInfo$ | async as userInfo" class="text-sm lg:text-base">
+              <p
+                *ngIf="userInfo$ | async as userInfo"
+                class="text-sm lg:text-base"
+              >
                 {{ userInfo.displayName ?? user.email }}
                 <fa-icon [icon]="faChevronDown"></fa-icon>
               </p>
               <ul class="p-2 bg-base-100 rounded-l-xl w-full">
                 <li><a href="/jokes">My Jokes</a></li>
-                <li *ngIf="isJokeWriter$ | async"><a href="/jokes/add">Add Joke</a></li>
+                <li *ngIf="isJokeWriter$ | async"
+                  ><a href="/jokes/add">Add Joke</a></li
+                >
                 <li><a href="/account">Account</a></li>
                 <li><a href="/account/logout">Logout</a></li>
               </ul>
@@ -47,7 +40,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
           </ng-template>
         </ul>
       </div>
-    </ng-template>
+    </div>
   `,
   styles: [],
 })
