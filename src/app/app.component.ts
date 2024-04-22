@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { inject } from "@vercel/analytics"
 
 @Component({
 	selector: "app-root",
@@ -18,4 +19,8 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
 	title = "Funny Father";
+
+	constructor() {
+		inject();
+	}
 }
